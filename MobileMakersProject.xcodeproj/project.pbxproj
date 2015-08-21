@@ -10,11 +10,16 @@
 		26341C7E1B827E02002798A2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 26341C7D1B827E02002798A2 /* main.m */; };
 		26341C811B827E03002798A2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 26341C801B827E03002798A2 /* AppDelegate.m */; };
 		26341C841B827E03002798A2 /* MobileMakersProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 26341C821B827E03002798A2 /* MobileMakersProject.xcdatamodeld */; };
-		26341C871B827E03002798A2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26341C861B827E03002798A2 /* ViewController.m */; };
+		26341C871B827E03002798A2 /* SetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26341C861B827E03002798A2 /* SetupViewController.m */; };
 		26341C8A1B827E03002798A2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26341C881B827E03002798A2 /* Main.storyboard */; };
 		26341C8C1B827E03002798A2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 26341C8B1B827E03002798A2 /* Images.xcassets */; };
 		26341C8F1B827E03002798A2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26341C8D1B827E03002798A2 /* LaunchScreen.xib */; };
 		26341C9B1B827E04002798A2 /* MobileMakersProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 26341C9A1B827E04002798A2 /* MobileMakersProjectTests.m */; };
+		26753DA61B86646500E438F8 /* DisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26753DA51B86646500E438F8 /* DisplayViewController.m */; };
+		26753DA91B8664A700E438F8 /* AddTagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26753DA81B8664A700E438F8 /* AddTagViewController.m */; };
+		26753DAE1B8685B800E438F8 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26753DAD1B8685B800E438F8 /* CoreBluetooth.framework */; };
+		26753DB01B8685C000E438F8 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26753DAF1B8685C000E438F8 /* CoreLocation.framework */; };
+		26753DB31B8687A400E438F8 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 26753DB21B8687A400E438F8 /* Tag.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,14 +39,22 @@
 		26341C7F1B827E03002798A2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		26341C801B827E03002798A2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		26341C831B827E03002798A2 /* MobileMakersProject.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MobileMakersProject.xcdatamodel; sourceTree = "<group>"; };
-		26341C851B827E03002798A2 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		26341C861B827E03002798A2 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		26341C851B827E03002798A2 /* SetupViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetupViewController.h; sourceTree = "<group>"; };
+		26341C861B827E03002798A2 /* SetupViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetupViewController.m; sourceTree = "<group>"; };
 		26341C891B827E03002798A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		26341C8B1B827E03002798A2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		26341C8E1B827E03002798A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		26341C941B827E03002798A2 /* MobileMakersProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MobileMakersProjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		26341C991B827E04002798A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		26341C9A1B827E04002798A2 /* MobileMakersProjectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MobileMakersProjectTests.m; sourceTree = "<group>"; };
+		26753DA41B86646500E438F8 /* DisplayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayViewController.h; sourceTree = "<group>"; };
+		26753DA51B86646500E438F8 /* DisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayViewController.m; sourceTree = "<group>"; };
+		26753DA71B8664A700E438F8 /* AddTagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTagViewController.h; sourceTree = "<group>"; };
+		26753DA81B8664A700E438F8 /* AddTagViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTagViewController.m; sourceTree = "<group>"; };
+		26753DAD1B8685B800E438F8 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		26753DAF1B8685C000E438F8 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		26753DB11B8687A400E438F8 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
+		26753DB21B8687A400E438F8 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +62,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26753DB01B8685C000E438F8 /* CoreLocation.framework in Frameworks */,
+				26753DAE1B8685B800E438F8 /* CoreBluetooth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +80,10 @@
 		26341C6F1B827E01002798A2 = {
 			isa = PBXGroup;
 			children = (
+				26753DB11B8687A400E438F8 /* Tag.h */,
+				26753DB21B8687A400E438F8 /* Tag.m */,
+				26753DAF1B8685C000E438F8 /* CoreLocation.framework */,
+				26753DAD1B8685B800E438F8 /* CoreBluetooth.framework */,
 				26341C7A1B827E01002798A2 /* MobileMakersProject */,
 				26341C971B827E04002798A2 /* MobileMakersProjectTests */,
 				26341C791B827E01002798A2 /* Products */,
@@ -85,9 +104,13 @@
 			children = (
 				26341C7F1B827E03002798A2 /* AppDelegate.h */,
 				26341C801B827E03002798A2 /* AppDelegate.m */,
-				26341C851B827E03002798A2 /* ViewController.h */,
-				26341C861B827E03002798A2 /* ViewController.m */,
+				26341C851B827E03002798A2 /* SetupViewController.h */,
+				26341C861B827E03002798A2 /* SetupViewController.m */,
 				26341C881B827E03002798A2 /* Main.storyboard */,
+				26753DA71B8664A700E438F8 /* AddTagViewController.h */,
+				26753DA81B8664A700E438F8 /* AddTagViewController.m */,
+				26753DA41B86646500E438F8 /* DisplayViewController.h */,
+				26753DA51B86646500E438F8 /* DisplayViewController.m */,
 				26341C8B1B827E03002798A2 /* Images.xcassets */,
 				26341C8D1B827E03002798A2 /* LaunchScreen.xib */,
 				26341C821B827E03002798A2 /* MobileMakersProject.xcdatamodeld */,
@@ -222,9 +245,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26753DA61B86646500E438F8 /* DisplayViewController.m in Sources */,
+				26753DA91B8664A700E438F8 /* AddTagViewController.m in Sources */,
 				26341C811B827E03002798A2 /* AppDelegate.m in Sources */,
+				26753DB31B8687A400E438F8 /* Tag.m in Sources */,
 				26341C7E1B827E02002798A2 /* main.m in Sources */,
-				26341C871B827E03002798A2 /* ViewController.m in Sources */,
+				26341C871B827E03002798A2 /* SetupViewController.m in Sources */,
 				26341C841B827E03002798A2 /* MobileMakersProject.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -420,6 +446,7 @@
 				26341CA01B827E04002798A2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		26341CA11B827E04002798A2 /* Build configuration list for PBXNativeTarget "MobileMakersProjectTests" */ = {
 			isa = XCConfigurationList;
@@ -428,6 +455,7 @@
 				26341CA31B827E04002798A2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
