@@ -81,7 +81,11 @@
                     </view>
                     <navigationItem key="navigationItem" title="Set Up" id="L2O-Js-Zrx"/>
                     <connections>
+<<<<<<< HEAD
+                        <outlet property="continueButton" destination="gJd-3h-ziI" id="sdG-a6-ycZ"/>
+=======
                         <outlet property="continueButton" destination="gJd-3h-ziI" id="mKq-1n-Xs1"/>
+>>>>>>> d6963e388f08d775c98aab8e555ccc7b572fda4e
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
