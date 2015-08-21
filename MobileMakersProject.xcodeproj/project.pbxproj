@@ -15,6 +15,7 @@
 		26341C8C1B827E03002798A2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 26341C8B1B827E03002798A2 /* Images.xcassets */; };
 		26341C8F1B827E03002798A2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26341C8D1B827E03002798A2 /* LaunchScreen.xib */; };
 		26341C9B1B827E04002798A2 /* MobileMakersProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 26341C9A1B827E04002798A2 /* MobileMakersProjectTests.m */; };
+		DC72A83C1B866EF10011122B /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC72A83B1B866EF10011122B /* CoreBluetooth.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		26341C941B827E03002798A2 /* MobileMakersProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MobileMakersProjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		26341C991B827E04002798A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		26341C9A1B827E04002798A2 /* MobileMakersProjectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MobileMakersProjectTests.m; sourceTree = "<group>"; };
+		DC72A83B1B866EF10011122B /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC72A83C1B866EF10011122B /* CoreBluetooth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +68,7 @@
 		26341C6F1B827E01002798A2 = {
 			isa = PBXGroup;
 			children = (
+				DC72A83B1B866EF10011122B /* CoreBluetooth.framework */,
 				26341C7A1B827E01002798A2 /* MobileMakersProject */,
 				26341C971B827E04002798A2 /* MobileMakersProjectTests */,
 				26341C791B827E01002798A2 /* Products */,
@@ -420,6 +424,7 @@
 				26341CA01B827E04002798A2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		26341CA11B827E04002798A2 /* Build configuration list for PBXNativeTarget "MobileMakersProjectTests" */ = {
 			isa = XCConfigurationList;
@@ -428,6 +433,7 @@
 				26341CA31B827E04002798A2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

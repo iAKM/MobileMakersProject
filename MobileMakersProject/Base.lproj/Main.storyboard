@@ -80,6 +80,9 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Set Up" id="L2O-Js-Zrx"/>
+                    <connections>
+                        <outlet property="continueButton" destination="gJd-3h-ziI" id="sdG-a6-ycZ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>

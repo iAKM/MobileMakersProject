@@ -7,8 +7,11 @@
 //
 
 #import "ViewController.h"
+#import <CoreBluetooth/CoreBluetooth.h>
 
-@interface ViewController ()
+@interface ViewController () <CBCentralManagerDelegate>
+@property CBCentralManager *bluetoothManager;
+@property (weak, nonatomic) IBOutlet UIButton *continueButton;
 
 @end
 
@@ -16,12 +19,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)startBluetoothStatusMonitoring {
+
+    self.bluetoothManager = [[CBCentralManager alloc] initWithDelegate:self queue:dispatch_get_main_queue() options:@{CBCentralManagerOptionShowPowerAlertKey: @(NO)}];
+}
+
+-(void)centralManagerDidUpdateState:(CBCentralManager *)central {
+
+    if ([central state] == CBCentralManagerStatePoweredOn) {
+        self.continueButton.enabled = YES;
+    }
+
+    else {
+        self.continueButton.enabled = NO;
+    }
 }
 
 @end
