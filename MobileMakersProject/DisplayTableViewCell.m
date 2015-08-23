@@ -24,7 +24,7 @@
 {
     [super layoutSubviews];
 
-    self.imageView.frame = CGRectMake( 263, 22, 90, 90 ); // image positioning here
+    self.imageView.frame = CGRectMake( 215, 22, 85, 85 ); // image positioning here
     self.textLabel.frame = CGRectMake(15, 0, 370, 131);
 }
 

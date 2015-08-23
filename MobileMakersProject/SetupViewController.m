@@ -9,11 +9,12 @@
 #import "SetupViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import <CoreBluetooth/CoreBluetooth.h>
-@interface SetupViewController ()<CLLocationManagerDelegate>
+
+@interface SetupViewController ()<CLLocationManagerDelegate, CBCentralManagerDelegate, UIAlertViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UIButton *continueButton;
-
 @property CLLocationManager *locationManager;
+@property CBCentralManager *bluetoothManager;
 
 @end
 
@@ -21,12 +22,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+
 
     self.locationManager = [[CLLocationManager alloc] init];
     if([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
         [self.locationManager requestAlwaysAuthorization];
+
+    self.bluetoothManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+    }
 }
 
+- (void)centralManagerDidUpdateState:(CBCentralManager *)central {
+    if (central.state == CBCentralManagerStatePoweredOn) {
+        self.continueButton.enabled = YES;
+
+    } else if(central.state == CBCentralManagerStatePoweredOff) {
+        self.continueButton.enabled = NO;
+        //Bluetooth is disabled. ios pops-up an alert automatically
+    }
 }
+
 @end

@@ -30,6 +30,8 @@
     AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
     self.moc = delegate.managedObjectContext;
 
+    [[self navigationController] setNavigationBarHidden:NO animated:YES]; //does not hide navigation bar
+
 
 //    [self loadPhotos];
 
@@ -147,13 +149,11 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+-(BOOL) textFieldShouldReturn:(UITextField *)textField{
 
-
-
-
-
-
-
+    [textField resignFirstResponder];
+    return YES;
+}
 
 
 @end

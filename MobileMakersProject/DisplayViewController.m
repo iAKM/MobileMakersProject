@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "Tag.h"
 #import "DisplayTableViewCell.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface DisplayViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -32,6 +33,8 @@
 
     AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
     self.moc = delegate.managedObjectContext;
+
+    [[self navigationController] setNavigationBarHidden:YES animated:YES]; // this hides the navigation bar.
 
 }
 
@@ -93,6 +96,30 @@
     NSLog(@"you have %li photos", self.imagesFromCoreData.count);
 
     [self.tableView reloadData];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+
+        [self.tableView beginUpdates];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath]
+                              withRowAnimation:UITableViewRowAnimationAutomatic];
+
+        Photo *deletedPhoto = [self.imagesFromCoreData objectAtIndex:indexPath.row];
+        [self.moc deleteObject:deletedPhoto];
+        Tag *deletedTag = [self.tags objectAtIndex:indexPath.row];
+        [self.moc deleteObject:deletedTag];
+
+        [self.moc save:nil];
+        [self imagesFromCoreData];
+        [self tags];
+        [self.tableView endUpdates];
+    }
 }
 
 -(void)populateWithTagsIfEmpty
