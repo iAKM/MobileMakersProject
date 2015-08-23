@@ -20,6 +20,8 @@
 		26753DAE1B8685B800E438F8 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26753DAD1B8685B800E438F8 /* CoreBluetooth.framework */; };
 		26753DB01B8685C000E438F8 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26753DAF1B8685C000E438F8 /* CoreLocation.framework */; };
 		26753DB31B8687A400E438F8 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 26753DB21B8687A400E438F8 /* Tag.m */; };
+		DC72A83F1B8797C90011122B /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = DC72A83E1B8797C90011122B /* Photo.m */; };
+		DC72A8421B8978D90011122B /* DisplayTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC72A8411B8978D90011122B /* DisplayTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,10 @@
 		26753DAF1B8685C000E438F8 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		26753DB11B8687A400E438F8 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
 		26753DB21B8687A400E438F8 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
+		DC72A83D1B8797C90011122B /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
+		DC72A83E1B8797C90011122B /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
+		DC72A8401B8978D90011122B /* DisplayTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayTableViewCell.h; sourceTree = "<group>"; };
+		DC72A8411B8978D90011122B /* DisplayTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +86,8 @@
 		26341C6F1B827E01002798A2 = {
 			isa = PBXGroup;
 			children = (
+				DC72A83D1B8797C90011122B /* Photo.h */,
+				DC72A83E1B8797C90011122B /* Photo.m */,
 				26753DB11B8687A400E438F8 /* Tag.h */,
 				26753DB21B8687A400E438F8 /* Tag.m */,
 				26753DAF1B8685C000E438F8 /* CoreLocation.framework */,
@@ -111,6 +119,8 @@
 				26753DA81B8664A700E438F8 /* AddTagViewController.m */,
 				26753DA41B86646500E438F8 /* DisplayViewController.h */,
 				26753DA51B86646500E438F8 /* DisplayViewController.m */,
+				DC72A8401B8978D90011122B /* DisplayTableViewCell.h */,
+				DC72A8411B8978D90011122B /* DisplayTableViewCell.m */,
 				26341C8B1B827E03002798A2 /* Images.xcassets */,
 				26341C8D1B827E03002798A2 /* LaunchScreen.xib */,
 				26341C821B827E03002798A2 /* MobileMakersProject.xcdatamodeld */,
@@ -249,8 +259,10 @@
 				26753DA91B8664A700E438F8 /* AddTagViewController.m in Sources */,
 				26341C811B827E03002798A2 /* AppDelegate.m in Sources */,
 				26753DB31B8687A400E438F8 /* Tag.m in Sources */,
+				DC72A83F1B8797C90011122B /* Photo.m in Sources */,
 				26341C7E1B827E02002798A2 /* main.m in Sources */,
 				26341C871B827E03002798A2 /* SetupViewController.m in Sources */,
+				DC72A8421B8978D90011122B /* DisplayTableViewCell.m in Sources */,
 				26341C841B827E03002798A2 /* MobileMakersProject.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

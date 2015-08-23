@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Photo.h"
 
 @interface DisplayViewController : UIViewController
+
+-(void)loadPhotos;
 
 @end

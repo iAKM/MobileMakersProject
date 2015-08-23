@@ -14,4 +14,11 @@
 @property (strong, nonatomic) IBOutlet UITextField *majorTxtFld;
 @property (strong, nonatomic) IBOutlet UITextField *minorTxtFld;
 
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+
+@property BOOL newMedia;
+
+- (IBAction)useCameraRoll:(id)sender;
+- (IBAction)useCamera:(id)sender;
+
 @end

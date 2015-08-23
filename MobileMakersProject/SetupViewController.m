@@ -23,13 +23,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
 
-
     self.locationManager = [[CLLocationManager alloc] init];
     if([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
         [self.locationManager requestAlwaysAuthorization];
-
 }
-
 
 }
 @end
