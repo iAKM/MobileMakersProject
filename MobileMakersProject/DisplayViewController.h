@@ -11,6 +11,9 @@
 
 @interface DisplayViewController : UIViewController
 
+@property (strong) NSArray *beacons;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+
 -(void)loadPhotos;
 
 @end

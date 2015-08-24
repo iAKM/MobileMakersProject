@@ -18,8 +18,6 @@
 @property NSManagedObjectContext *moc;
 @property NSArray *tags;
 @property NSArray *imagesFromCoreData;
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
-
 
 @end
 
@@ -29,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-  //  [self loadTags];
+//    [self loadTags];
 
     AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
     self.moc = delegate.managedObjectContext;
@@ -69,6 +67,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.tags.count;
+    return self.beacons.count;
     return self.imagesFromCoreData.count;
 }
 
@@ -78,14 +77,34 @@
     Tag *tag = [self.tags objectAtIndex:indexPath.row];
     Photo *photo = self.imagesFromCoreData[indexPath.row];
 
+
     NSData *data = photo.imageData;
     cell.textLabel.text = tag.name;
 
     UIImage *image = [UIImage imageWithData:data];
     cell.imageView.image = image;
 
-    return cell;
+//BEACONS
 
+    CLBeacon *beacon = (CLBeacon*)[self.beacons objectAtIndex:indexPath.row];
+    NSString *proximityLabel = @"";
+    switch (beacon.proximity) {
+        case CLProximityFar:
+            proximityLabel = @"Far";
+            break;
+        case CLProximityNear:
+            proximityLabel = @"Near";
+            break;
+        case CLProximityImmediate:
+            proximityLabel = @"Immediate";
+            break;
+        case CLProximityUnknown:
+            proximityLabel = @"Unknown";
+            break;
+    }
+    cell.detailTextLabel.text = proximityLabel;
+
+    return cell;
 }
 
 -(void)loadPhotos {
