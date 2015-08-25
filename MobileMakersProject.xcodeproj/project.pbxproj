@@ -23,6 +23,8 @@
 		26753DB01B8685C000E438F8 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26753DAF1B8685C000E438F8 /* CoreLocation.framework */; };
 		DC72A83F1B8797C90011122B /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = DC72A83E1B8797C90011122B /* Photo.m */; };
 		DC72A8421B8978D90011122B /* DisplayTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC72A8411B8978D90011122B /* DisplayTableViewCell.m */; };
+		DC8F84261B8C15A300C56466 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC8F84251B8C15A300C56466 /* QuartzCore.framework */; };
+		DC8F84281B8C22FB00C56466 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC8F84271B8C22FB00C56466 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +66,8 @@
 		DC72A83E1B8797C90011122B /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
 		DC72A8401B8978D90011122B /* DisplayTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayTableViewCell.h; sourceTree = "<group>"; };
 		DC72A8411B8978D90011122B /* DisplayTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayTableViewCell.m; sourceTree = "<group>"; };
+		DC8F84251B8C15A300C56466 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		DC8F84271B8C22FB00C56466 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +75,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC8F84281B8C22FB00C56466 /* MapKit.framework in Frameworks */,
+				DC8F84261B8C15A300C56466 /* QuartzCore.framework in Frameworks */,
 				26753DB01B8685C000E438F8 /* CoreLocation.framework in Frameworks */,
 				26753DAE1B8685B800E438F8 /* CoreBluetooth.framework in Frameworks */,
 			);
@@ -95,6 +101,8 @@
 				DC72A83E1B8797C90011122B /* Photo.m */,
 				2651FFD21B8B6785002578F5 /* BeaconHelper.h */,
 				2651FFD31B8B6797002578F5 /* BeaconHelper.m */,
+				DC8F84271B8C22FB00C56466 /* MapKit.framework */,
+				DC8F84251B8C15A300C56466 /* QuartzCore.framework */,
 				26753DAF1B8685C000E438F8 /* CoreLocation.framework */,
 				26753DAD1B8685B800E438F8 /* CoreBluetooth.framework */,
 				26341C7A1B827E01002798A2 /* MobileMakersProject */,
@@ -115,11 +123,11 @@
 		26341C7A1B827E01002798A2 /* MobileMakersProject */ = {
 			isa = PBXGroup;
 			children = (
+				26341C881B827E03002798A2 /* Main.storyboard */,
 				26341C7F1B827E03002798A2 /* AppDelegate.h */,
 				26341C801B827E03002798A2 /* AppDelegate.m */,
 				26341C851B827E03002798A2 /* SetupViewController.h */,
 				26341C861B827E03002798A2 /* SetupViewController.m */,
-				26341C881B827E03002798A2 /* Main.storyboard */,
 				26753DA71B8664A700E438F8 /* AddTagViewController.h */,
 				26753DA81B8664A700E438F8 /* AddTagViewController.m */,
 				26753DA41B86646500E438F8 /* DisplayViewController.h */,

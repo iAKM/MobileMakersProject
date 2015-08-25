@@ -7,16 +7,15 @@
 //
 
 #import <CoreLocation/CoreLocation.h>
+#import <QuartzCore/QuartzCore.h>
+#import <MapKit/MapKit.h>
 #import "DisplayViewController.h"
 #import "AppDelegate.h"
 #import "Tag.h"
 #import "DisplayTableViewCell.h"
-#import <QuartzCore/QuartzCore.h>
+
 #import "BeaconHelper.h"
 #import "AddTagViewController.h"
-
-
-
 
 @interface DisplayViewController ()<UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 
@@ -27,7 +26,6 @@
 @property CLLocationManager *locationManager;
 @property CLBeaconRegion *beaconRegion;
 @property (strong, nonatomic) IBOutlet UILabel *testLabel;
-
 
 
 @end
@@ -48,6 +46,7 @@
     [[self navigationController] setNavigationBarHidden:YES animated:YES]; // this hides the navigation bar.
 
         self.locationManager.delegate = self;
+
 }
 
 -(void)getBeaconsWithString:(NSString *)uuid
@@ -69,7 +68,6 @@
 }
 
 
-
 -(void)viewWillAppear:(BOOL)animated
 {
     AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
@@ -79,7 +77,6 @@
 
     [self loadTags];
     [self loadPhotos];
-
 
 }
 
@@ -94,10 +91,8 @@
 
 }
 
-
 -(void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region
 {
-
 
     NSString *message = @"";
     self.beacons = beacons;
@@ -178,19 +173,15 @@
 {
 
    DisplayTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
-   // Tag *tag = [self.tags objectAtIndex:indexPath.row];
-  // Photo *photo = self.imagesFromCoreData[indexPath.row];
+    Tag *tag = [self.tags objectAtIndex:indexPath.row];
+    Photo *photo = self.imagesFromCoreData[indexPath.row];
 
 
-   // NSData *data = photo.imageData;
-   // UIImage *image = [UIImage imageWithData:data];
-  //  cell.imageView.image = image;
+    NSData *data = photo.imageData;
+    UIImage *image = [UIImage imageWithData:data];
+    cell.imageView.image = image;
 
 
-
-
-
-    
 //BEACONS
 
     CLBeacon *beacon = (CLBeacon*)[self.beacons objectAtIndex:indexPath.row];
@@ -225,9 +216,6 @@
                          //    beacon.minor.intValue, (int)beacon.rssi, beacon.proximityUUID.UUIDString];
 
     cell.detailTextLabel.text = detailLabel;
-
-
-
 
     return cell;
 }
@@ -265,7 +253,5 @@
         [self.tableView endUpdates];
     }
 }
-
-
 
 @end
