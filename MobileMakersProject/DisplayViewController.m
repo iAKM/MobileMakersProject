@@ -17,16 +17,17 @@
 #import "BeaconHelper.h"
 #import "AddTagViewController.h"
 
-@interface DisplayViewController ()<UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, UIApplicationDelegate>
+@interface DisplayViewController ()<UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, UIApplicationDelegate, CBCentralManagerDelegate>
 @property NSArray *array;
 @property NSManagedObjectContext *moc;
 @property NSMutableArray *tags;
-@property NSArray *imagesFromCoreData;
 @property CLLocationManager *locationManager;
 @property CLBeaconRegion *beaconRegion;
 @property (strong, nonatomic) IBOutlet UILabel *testLabel;
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property MKPointAnnotation *mmAnnot;
+@property CBCentralManager *bluetoothManager;
+
 
 
 
@@ -51,14 +52,38 @@
 
         self.locationManager.delegate = self;
 
+    self.bluetoothManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
 
-    self.mapView.showsUserLocation = YES;
+
+//    if (self.beacons == 0)
+//    {
+//        self.tableView.hidden = YES;
+//
+//    }
+//    else
+//    {
+//        self.tableView.hidden = NO;
+//    }
+//
+
+   // self.mapView.showsUserLocation = YES;
     //[self.mapView setCenterCoordinate:self.mapView.userLocation.location.coordinate animated:YES];
    // MKCoordinateSpan span = MKCoordinateSpanMake(0.05, 0.05);
 
     //[self.mapView setCenterCoordinate:CLLocationCoordinate2DMake(self.mapView.userLocation, span) animated:YES)];
 
 }
+
+- (void)centralManagerDidUpdateState:(CBCentralManager *)central {
+   if(central.state == CBCentralManagerStatePoweredOff) {
+
+       UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Bluettoth is Off" message:@"Please turn on the bluetooth by pulling up control center" delegate:self cancelButtonTitle:@"Got It" otherButtonTitles:nil, nil];
+       [alertView show];
+
+    }
+}
+
+
 
 -(void)getBeaconsWithString:(NSString *)uuid
 {
@@ -91,6 +116,15 @@
 
     [[self navigationController] setNavigationBarHidden:YES animated:YES]; // this hides the navigation bar.
 
+//    if (self.beacons == 0)
+//    {
+//        self.tableView.hidden = YES;
+//
+//    }
+//    else
+//    {
+//        self.tableView.hidden = NO;
+//    }
 
 }
 
@@ -114,7 +148,7 @@
 
     NSString *message = @"";
     self.beacons = beacons;
-    [self.tableView reloadData];
+[self.tableView reloadData];
 
 
     NSLog(@"beaconsssss %@", beacons);
@@ -134,6 +168,8 @@
             case CLProximityFar:
                 message = @"You are far away from the beacon";
                 [delegate sendLocalNotificationWithMessage:message];
+                self.mapView.showsUserLocation = YES;
+
                 break;
             case CLProximityNear:
                 message = @"You are near the beacon";
@@ -145,9 +181,8 @@
                 break;
             case CLProximityUnknown:
                 break; //check
+            default: message = @"No beacons are nearby";
         }
-    } else {
-        message = @"No beacons are nearby";
     }
 
     NSLog(@"%@", message);
@@ -190,7 +225,7 @@
 {
     return self.tags.count;
     return self.beacons.count;
-    return self.imagesFromCoreData.count;
+//    return self.imagesFromCoreData.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -198,19 +233,19 @@
 
    DisplayTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
     Tag *tag = [self.tags objectAtIndex:indexPath.row];
-    Photo *photo = self.imagesFromCoreData[indexPath.row];
 
-
-    NSData *data = photo.imageData;
+    NSData *data = tag.image;
     UIImage *image = [UIImage imageWithData:data];
     cell.imageView.image = image;
 
 
 //BEACONS
-
-    CLBeacon *beacon = (CLBeacon*)[self.beacons objectAtIndex:indexPath.row];
+    if (self.beacons.count > 0)
+    {
+    CLBeacon *beacon = [self.beacons objectAtIndex:indexPath.row];
     NSString *proximityLabel = @"";
-    switch (beacon.proximity) {
+    switch (beacon.proximity)
+        {
         case CLProximityFar:
             proximityLabel = @"Oops..your dog is getting far";
           //  self.view.backgroundColor = [UIColor orangeColor];
@@ -236,12 +271,7 @@
 
             break;
     }
-
-    cell.nameLabel.text = tag.name;
-
-    //double accuracy = roundf(beacon.accuracy * 100.0)/100.0;
-
-//    beacon.accuracy = roundf(beacon.accuracy *100.0)/100.0;
+        cell.nameLabel.text = tag.name;
 
     NSString *detailLabel = [NSString stringWithFormat:@"%@, Dist: %0.001f", proximityLabel, beacon.accuracy];
 
@@ -251,15 +281,19 @@
 
     cell.proxLabel.text = detailLabel;
 
+    }
+
+
+
     return cell;
 }
 
 -(void)loadPhotos {
-    NSFetchRequest *requestPhotos = [[NSFetchRequest alloc]initWithEntityName:@"Photo"];
+    NSFetchRequest *requestPhotos = [[NSFetchRequest alloc]initWithEntityName:@"Tag"];
     [requestPhotos setReturnsObjectsAsFaults:NO];
     [requestPhotos setRelationshipKeyPathsForPrefetching:@[@"comments"]];
-    self.imagesFromCoreData = [self.moc executeFetchRequest:requestPhotos error:nil];
-    NSLog(@"you have %li photos", self.imagesFromCoreData.count);
+    self.tags = [[self.moc executeFetchRequest:requestPhotos error:nil] mutableCopy];
+    NSLog(@"you have %li photos", self.tags.count);
 
     [self.tableView reloadData];
 }
@@ -275,14 +309,14 @@
         [self.tableView beginUpdates];
         [self.tableView deleteRowsAtIndexPaths:@[indexPath]
                               withRowAnimation:UITableViewRowAnimationAutomatic];
-
-        Photo *deletedPhoto = [self.imagesFromCoreData objectAtIndex:indexPath.row];
-        [self.moc deleteObject:deletedPhoto];
+//
+//        Photo *deletedPhoto = [self.imagesFromCoreData objectAtIndex:indexPath.row];
+//        [self.moc deleteObject:deletedPhoto];
         Tag *deletedTag = [self.tags objectAtIndex:indexPath.row];
         [self.moc deleteObject:deletedTag];
 
         [self.moc save:nil];
-        [self imagesFromCoreData];
+//        [self imagesFromCoreData];
         [self tags];
         [self.tableView endUpdates];
     }

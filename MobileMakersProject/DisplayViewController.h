@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Photo.h"
 #import <CoreLocation/CoreLocation.h>
 
 @interface DisplayViewController : UIViewController <CLLocationManagerDelegate>

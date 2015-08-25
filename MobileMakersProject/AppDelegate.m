@@ -8,9 +8,12 @@
 
 #import "AppDelegate.h"
 #import "DisplayViewController.h"
+#import "SetupViewController.h"
 #import <CoreLocation/CoreLocation.h>
 
 @interface AppDelegate ()
+
+
 
 @end
 
@@ -18,6 +21,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    self.bluetoothManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+
 
     switch ([CLLocationManager authorizationStatus]) {
         case kCLAuthorizationStatusAuthorizedAlways:
@@ -85,10 +90,26 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+//    self.bluetoothManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+
 }
+
+- (void)centralManagerDidUpdateState:(CBCentralManager *)central {
+    if(central.state == CBCentralManagerStatePoweredOff) {
+
+        [self sendLocalNotificationWithMessage:@"Please enable bluetooth to make the most out of TAG. :)"];
+
+        
+    }
+}
+
+
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+
+   
+
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -98,6 +119,9 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
+
+    [self sendLocalNotificationWithMessage:@"Tag is disabled and not running"];
+    
     [self saveContext];
 }
 

@@ -2,7 +2,7 @@
 //  Tag.h
 //  MobileMakersProject
 //
-//  Created by Achyut Kumar Maddela on 24/08/15.
+//  Created by Achyut Kumar Maddela on 25/08/15.
 //  Copyright (c) 2015 iAKM. All rights reserved.
 //
 
@@ -16,5 +16,6 @@
 @property (nonatomic, retain) NSNumber * minor;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * uuid;
+@property (nonatomic, retain) NSData * image;
 
 @end

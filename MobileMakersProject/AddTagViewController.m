@@ -10,13 +10,11 @@
 #import "MobileCoreServices/MobileCoreServices.h" //this will not auto complete.
 #import "AppDelegate.h"
 #import "Tag.h"
-#import "Photo.h"
 #import "DisplayViewController.h"
 
 @interface AddTagViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property NSManagedObjectContext *moc;
-@property (nonatomic, retain) Photo *photo;
 @property (nonatomic, copy) NSArray *photos;
 
 @end
@@ -40,8 +38,7 @@
     UIImage *image = self.imageView.image; //image
     NSData *imageData = UIImagePNGRepresentation(image); //image
 
-    self.photo = [NSEntityDescription insertNewObjectForEntityForName:@"Photo"inManagedObjectContext:self.moc];
-    self.photo.imageData = imageData; //image
+//    self.photo = [NSEntityDescription insertNewObjectForEntityForName:@"Photo"inManagedObjectContext:self.moc];
 
     NSLog(@"inserting data");
 
@@ -55,6 +52,8 @@
     [newObject setValue:[NSNumber numberWithInteger:[self.majorTxtFld.text integerValue]] forKey:@"major"];
     [newObject setValue:[NSNumber numberWithInteger:[self.minorTxtFld.text integerValue]] forKey:@"minor"];
     [newObject setValue:self.uuidTxtFld.text forKey:@"uuid"];
+    [newObject setValue:imageData forKey:@"image"];
+
     
 
     [self.moc save:nil];
@@ -67,13 +66,13 @@
 
 
 - (void)loadPhotos {
-    NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Photo"];
+    NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Tag"];
     self.photos = [self.moc executeFetchRequest:request error:nil];
     NSLog(@"you have %li photos", self.photos.count);
 
-    for (Photo *photo in self.photos)
+    for (Tag *photo in self.photos)
     {
-        NSData *data = photo.imageData;
+        NSData *data = photo.image;
         UIImage *image = [UIImage imageWithData:data];
         self.imageView.image = image;
     }
