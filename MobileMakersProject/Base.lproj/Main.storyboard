@@ -107,64 +107,81 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleAspectFit" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="1" reuseIdentifier="CellID" textLabel="it9-xx-xzB" detailTextLabel="Vyx-he-OOJ" rowHeight="130" style="IBUITableViewCellStyleSubtitle" id="wZH-gM-yPO" customClass="DisplayTableViewCell">
+                                    <tableViewCell contentMode="scaleAspectFit" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="1" reuseIdentifier="CellID" rowHeight="130" id="wZH-gM-yPO" customClass="DisplayTableViewCell">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wZH-gM-yPO" id="y3U-Ow-BCF">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Proximity" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="it9-xx-xzB">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="18"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <variation key="widthClass=compact">
-                                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
-                                                    </variation>
-                                                </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ls0-nx-czY">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="80" id="BaM-rR-rrF"/>
+                                                        <constraint firstAttribute="width" constant="87" id="LCG-9v-3Bl"/>
+                                                    </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                             <integer key="value" value="10"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="BaM-rR-rrF"/>
+                                                            <exclude reference="LCG-9v-3Bl"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="widthClass=compact">
+                                                        <mask key="constraints">
+                                                            <include reference="BaM-rR-rrF"/>
+                                                            <include reference="LCG-9v-3Bl"/>
+                                                        </mask>
+                                                    </variation>
                                                 </imageView>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Accuracy" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Vyx-he-OOJ">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dzA-mP-qHG">
+                                                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
-                                                    <variation key="widthClass=compact">
-                                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="11"/>
+                                                    <variation key="widthClass=compact" fixedFrame="YES">
+                                                        <rect key="frame" x="127" y="8" width="42" height="21"/>
+                                                    </variation>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WBb-9H-E4d">
+                                                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="widthClass=compact" fixedFrame="YES">
+                                                        <rect key="frame" x="115" y="54" width="194" height="21"/>
                                                     </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottomMargin" secondItem="Ls0-nx-czY" secondAttribute="bottom" constant="16" id="VaD-4e-UeM"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="Ls0-nx-czY" secondAttribute="trailing" constant="80" id="fPm-nL-nSW"/>
-                                                <constraint firstItem="Ls0-nx-czY" firstAttribute="top" secondItem="y3U-Ow-BCF" secondAttribute="topMargin" constant="17" id="lH7-sY-5wl"/>
-                                                <constraint firstItem="Ls0-nx-czY" firstAttribute="leading" secondItem="y3U-Ow-BCF" secondAttribute="leading" constant="225" id="tEs-qT-aPk"/>
+                                                <constraint firstItem="Ls0-nx-czY" firstAttribute="top" secondItem="y3U-Ow-BCF" secondAttribute="top" constant="25" id="Rmb-nJ-HJR"/>
+                                                <constraint firstAttribute="bottom" secondItem="Ls0-nx-czY" secondAttribute="bottom" constant="24" id="Rvl-my-WxZ"/>
+                                                <constraint firstItem="Ls0-nx-czY" firstAttribute="leading" secondItem="y3U-Ow-BCF" secondAttribute="leading" constant="8" id="hp8-o5-Mi3"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="subviews">
                                                     <exclude reference="Ls0-nx-czY"/>
+                                                    <exclude reference="dzA-mP-qHG"/>
+                                                    <exclude reference="WBb-9H-E4d"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <exclude reference="VaD-4e-UeM"/>
-                                                    <exclude reference="fPm-nL-nSW"/>
-                                                    <exclude reference="lH7-sY-5wl"/>
-                                                    <exclude reference="tEs-qT-aPk"/>
+                                                    <exclude reference="Rmb-nJ-HJR"/>
+                                                    <exclude reference="Rvl-my-WxZ"/>
+                                                    <exclude reference="hp8-o5-Mi3"/>
                                                 </mask>
                                             </variation>
                                             <variation key="widthClass=compact">
                                                 <mask key="subviews">
                                                     <include reference="Ls0-nx-czY"/>
+                                                    <include reference="dzA-mP-qHG"/>
+                                                    <include reference="WBb-9H-E4d"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <include reference="VaD-4e-UeM"/>
-                                                    <include reference="fPm-nL-nSW"/>
-                                                    <include reference="lH7-sY-5wl"/>
-                                                    <include reference="tEs-qT-aPk"/>
+                                                    <include reference="Rmb-nJ-HJR"/>
+                                                    <include reference="Rvl-my-WxZ"/>
+                                                    <include reference="hp8-o5-Mi3"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -172,6 +189,8 @@
                                         <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
                                             <outlet property="imageView" destination="Ls0-nx-czY" id="4Hm-Ex-Tnb"/>
+                                            <outlet property="nameLabel" destination="dzA-mP-qHG" id="vnJ-UE-VOH"/>
+                                            <outlet property="proxLabel" destination="WBb-9H-E4d" id="FWc-uk-sxc"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -195,7 +214,7 @@
                                     </navigationItem>
                                 </items>
                                 <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="0.0" y="64" width="400" height="44"/>
+                                    <rect key="frame" x="0.0" y="20" width="400" height="44"/>
                                 </variation>
                             </navigationBar>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="aOv-ie-OBv">
@@ -213,7 +232,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="34" y="105" width="42" height="21"/>
+                                    <rect key="frame" x="36" y="167" width="42" height="21"/>
                                 </variation>
                             </label>
                         </subviews>
@@ -553,6 +572,6 @@
         <image name="dog_placeholder" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="kxA-Ex-0pu"/>
+        <segue reference="ynR-Tt-CNV"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -27,12 +27,13 @@
 {
     [super layoutSubviews];
 
-    self.imageView.frame = CGRectMake(225, 25, 80, 80); // image positioning here
-    self.textLabel.frame = CGRectMake(15, 0, 370, 131);
-    self.detailTextLabel.frame = CGRectMake(16, 69, 150, 14);
+    self.imageView.frame = CGRectMake(8, 25, 87, 80); // image positioning here
+   // self.textLabel.frame = CGRectMake(15, 0, 370, 131);
+   // self.detailTextLabel.frame = CGRectMake(16, 69, 150, 14);
+    
 
-    self.imageView.layer.cornerRadius = 40.0;
-    self.imageView.layer.masksToBounds = YES;
+    self.imageView.layer.cornerRadius = self.imageView.frame.size.width/2.0;
+    self.imageView.clipsToBounds = YES;
 
 }
 

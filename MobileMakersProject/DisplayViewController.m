@@ -17,11 +17,10 @@
 #import "BeaconHelper.h"
 #import "AddTagViewController.h"
 
-@interface DisplayViewController ()<UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
-
+@interface DisplayViewController ()<UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, UIApplicationDelegate>
 @property NSArray *array;
 @property NSManagedObjectContext *moc;
-@property NSArray *tags;
+@property NSMutableArray *tags;
 @property NSArray *imagesFromCoreData;
 @property CLLocationManager *locationManager;
 @property CLBeaconRegion *beaconRegion;
@@ -90,6 +89,9 @@
     [self loadTags];
     [self loadPhotos];
 
+    [[self navigationController] setNavigationBarHidden:YES animated:YES]; // this hides the navigation bar.
+
+
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -155,7 +157,7 @@
 {
 
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Tag"];
-    self.tags = [self.moc executeFetchRequest:request error:nil];
+    self.tags = (NSMutableArray *)[self.moc executeFetchRequest:request error:nil];
     NSLog(@"self.tags --- %@", self.tags);
 
     NSLog(@"uuid from core data = %@",self.tags);
@@ -195,7 +197,7 @@
 {
 
    DisplayTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
-   // Tag *tag = [self.tags objectAtIndex:indexPath.row];
+    Tag *tag = [self.tags objectAtIndex:indexPath.row];
     Photo *photo = self.imagesFromCoreData[indexPath.row];
 
 
@@ -210,44 +212,44 @@
     NSString *proximityLabel = @"";
     switch (beacon.proximity) {
         case CLProximityFar:
-            proximityLabel = @"Far";
-            self.view.backgroundColor = [UIColor orangeColor];
-            cell.backgroundColor = [UIColor blackColor];
+            proximityLabel = @"Oops..your dog is getting far";
+          //  self.view.backgroundColor = [UIColor orangeColor];
+            cell.backgroundColor = [UIColor orangeColor];
 
             break;
         case CLProximityNear:
-            proximityLabel = @"Near";
-            self.view.backgroundColor = [UIColor yellowColor];
-            cell.backgroundColor = [UIColor purpleColor];
+            proximityLabel = @"Keep looking. You may find your dog nearby";
+           // self.view.backgroundColor = [UIColor yellowColor];
+            cell.backgroundColor = [UIColor yellowColor];
 
             break;
         case CLProximityImmediate:
-            proximityLabel = @"Immediate";
-            self.view.backgroundColor = [UIColor blueColor];
+            proximityLabel = @"look out. your dog mighr be next to you";
+          //  self.view.backgroundColor = [UIColor blueColor];
             cell.backgroundColor = [UIColor greenColor];
             break;
         case CLProximityUnknown:
             proximityLabel = @"Unknown";
-            self.view.backgroundColor = [UIColor redColor];
-            cell.backgroundColor = [UIColor grayColor];
+          //  self.view.backgroundColor = [UIColor redColor];
+            cell.backgroundColor = [UIColor redColor];
             
 
             break;
     }
 
-    cell.textLabel.text = proximityLabel;
+    cell.nameLabel.text = tag.name;
 
     //double accuracy = roundf(beacon.accuracy * 100.0)/100.0;
 
 //    beacon.accuracy = roundf(beacon.accuracy *100.0)/100.0;
 
-    NSString *detailLabel = [NSString stringWithFormat:@"Accuracy: %0.001f", beacon.accuracy];
+    NSString *detailLabel = [NSString stringWithFormat:@"%@, Dist: %0.001f", proximityLabel, beacon.accuracy];
 
 
    // NSString *detailLabel = [NSString stringWithFormat:@"Major: %d, Minor: %d, RSSI: %d, UUID: %@",beacon.major.intValue,
                          //    beacon.minor.intValue, (int)beacon.rssi, beacon.proximityUUID.UUIDString];
 
-    cell.detailTextLabel.text = detailLabel;
+    cell.proxLabel.text = detailLabel;
 
     return cell;
 }
