@@ -26,6 +26,11 @@
 @property CLLocationManager *locationManager;
 @property CLBeaconRegion *beaconRegion;
 @property (strong, nonatomic) IBOutlet UILabel *testLabel;
+@property (strong, nonatomic) IBOutlet MKMapView *mapView;
+@property MKPointAnnotation *mmAnnot;
+
+
+
 
 
 @end
@@ -47,6 +52,13 @@
 
         self.locationManager.delegate = self;
 
+
+    self.mapView.showsUserLocation = YES;
+    //[self.mapView setCenterCoordinate:self.mapView.userLocation.location.coordinate animated:YES];
+   // MKCoordinateSpan span = MKCoordinateSpanMake(0.05, 0.05);
+
+    //[self.mapView setCenterCoordinate:CLLocationCoordinate2DMake(self.mapView.userLocation, span) animated:YES)];
+
 }
 
 -(void)getBeaconsWithString:(NSString *)uuid
@@ -64,7 +76,7 @@
     [self.locationManager startMonitoringForRegion:beaconRegion];
     [self.locationManager startRangingBeaconsInRegion:beaconRegion];
     [self.locationManager startUpdatingLocation];
-    
+
 }
 
 
@@ -94,6 +106,10 @@
 -(void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region
 {
 
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+
+
+
     NSString *message = @"";
     self.beacons = beacons;
     [self.tableView reloadData];
@@ -115,15 +131,18 @@
         switch(nearestBeacon.proximity) {
             case CLProximityFar:
                 message = @"You are far away from the beacon";
+                [delegate sendLocalNotificationWithMessage:message];
                 break;
             case CLProximityNear:
                 message = @"You are near the beacon";
                 break;
             case CLProximityImmediate:
                 message = @"You are in the immediate proximity of the beacon";
+                [delegate sendLocalNotificationWithMessage:message];
+
                 break;
             case CLProximityUnknown:
-                return;
+                break; //check
         }
     } else {
         message = @"No beacons are nearby";
@@ -144,22 +163,25 @@
     [self.tableView reloadData];
 }
 
--(void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
-    [manager startRangingBeaconsInRegion:(CLBeaconRegion*)region];
-      [self.locationManager startMonitoringForRegion:(CLBeaconRegion *)region];
-    [self.locationManager startUpdatingLocation];
-
-}
-
--(void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
-    [manager stopRangingBeaconsInRegion:(CLBeaconRegion*)region];
-
-    [self.locationManager stopUpdatingLocation];
-
-    NSLog(@"You exited the region.");
-}
-
-
+//-(void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
+//    [manager startRangingBeaconsInRegion:(CLBeaconRegion*)region];
+//      [self.locationManager startMonitoringForRegion:(CLBeaconRegion *)region];
+//    [self.locationManager startUpdatingLocation];
+//
+//    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//
+//
+//}
+//
+//-(void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
+//    [manager stopRangingBeaconsInRegion:(CLBeaconRegion*)region];
+//
+//    [self.locationManager stopUpdatingLocation];
+//
+//    NSLog(@"You exited the region.");
+//}
+//
+//
 #pragma mark UITableView Datasource & Delegate Methods
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -173,7 +195,7 @@
 {
 
    DisplayTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
-    Tag *tag = [self.tags objectAtIndex:indexPath.row];
+   // Tag *tag = [self.tags objectAtIndex:indexPath.row];
     Photo *photo = self.imagesFromCoreData[indexPath.row];
 
 
@@ -190,26 +212,36 @@
         case CLProximityFar:
             proximityLabel = @"Far";
             self.view.backgroundColor = [UIColor orangeColor];
+            cell.backgroundColor = [UIColor blackColor];
+
             break;
         case CLProximityNear:
             proximityLabel = @"Near";
             self.view.backgroundColor = [UIColor yellowColor];
+            cell.backgroundColor = [UIColor purpleColor];
+
             break;
         case CLProximityImmediate:
             proximityLabel = @"Immediate";
             self.view.backgroundColor = [UIColor blueColor];
+            cell.backgroundColor = [UIColor greenColor];
             break;
         case CLProximityUnknown:
             proximityLabel = @"Unknown";
             self.view.backgroundColor = [UIColor redColor];
+            cell.backgroundColor = [UIColor grayColor];
+            
 
             break;
     }
 
     cell.textLabel.text = proximityLabel;
 
+    //double accuracy = roundf(beacon.accuracy * 100.0)/100.0;
 
-    NSString *detailLabel = [NSString stringWithFormat:@"Accuracy: %f", beacon.accuracy];
+//    beacon.accuracy = roundf(beacon.accuracy *100.0)/100.0;
+
+    NSString *detailLabel = [NSString stringWithFormat:@"Accuracy: %0.001f", beacon.accuracy];
 
 
    // NSString *detailLabel = [NSString stringWithFormat:@"Major: %d, Minor: %d, RSSI: %d, UUID: %@",beacon.major.intValue,

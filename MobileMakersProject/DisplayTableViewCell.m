@@ -10,6 +10,9 @@
 
 @implementation DisplayTableViewCell
 
+@dynamic imageView;
+
+
 - (void)awakeFromNib {
     // Initialization code
 }

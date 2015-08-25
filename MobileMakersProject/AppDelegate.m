@@ -39,14 +39,42 @@
         default:
             break;
     }
+
+    UIUserNotificationType types = UIUserNotificationTypeBadge |
+    UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+
+    UIUserNotificationSettings *mySettings =
+    [UIUserNotificationSettings settingsForTypes:types categories:nil];
+
+    [[UIApplication sharedApplication] registerUserNotificationSettings:mySettings];
+
        return YES;
 }
+
+-(void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
+    [manager startRangingBeaconsInRegion:(CLBeaconRegion*)region];
+    [self.locationManager startUpdatingLocation];
+
+    NSLog(@"You entered the region.");
+    [self sendLocalNotificationWithMessage:@"You entered the region."];
+}
+
+-(void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
+    [manager stopRangingBeaconsInRegion:(CLBeaconRegion*)region];
+    [self.locationManager stopUpdatingLocation];
+
+    NSLog(@"You exited the region.");
+    [self sendLocalNotificationWithMessage:@"You exited the region."];
+}
+
+
 
 -(void)sendLocalNotificationWithMessage:(NSString*)message {
     UILocalNotification *notification = [[UILocalNotification alloc] init];
     notification.alertBody = message;
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
 }
+
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
