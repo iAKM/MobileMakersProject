@@ -310,22 +310,20 @@
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-
     if (editingStyle == UITableViewCellEditingStyleDelete) {
 
+        [self.moc deleteObject:self.tags[indexPath.row]];
+
         [self.tableView beginUpdates];
-        [self.tableView deleteRowsAtIndexPaths:@[indexPath]
-                              withRowAnimation:UITableViewRowAnimationAutomatic];
-//
-//        Photo *deletedPhoto = [self.imagesFromCoreData objectAtIndex:indexPath.row];
-//        [self.moc deleteObject:deletedPhoto];
-        Tag *deletedTag = [self.tags objectAtIndex:indexPath.row];
-        [self.moc deleteObject:deletedTag];
+
+        id tmp = [self.tags mutableCopy];
+        [tmp removeObjectAtIndex:indexPath.row];
+        self.tags = [tmp copy];
+
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView endUpdates];
 
         [self.moc save:nil];
-//        [self imagesFromCoreData];
-        [self tags];
-        [self.tableView endUpdates];
     }
 }
 
