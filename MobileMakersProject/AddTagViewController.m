@@ -51,7 +51,7 @@
     [newObject setValue:self.nameTxtFld.text forKey:@"name"];
     [newObject setValue:[NSNumber numberWithInteger:[self.majorTxtFld.text integerValue]] forKey:@"major"];
     [newObject setValue:[NSNumber numberWithInteger:[self.minorTxtFld.text integerValue]] forKey:@"minor"];
-    [newObject setValue:self.uuidTxtFld.text forKey:@"uuid"];
+   // [newObject setValue:self.uuidTxtFld.text forKey:@"uuid"];
     [newObject setValue:imageData forKey:@"image"];
 
     
@@ -60,7 +60,7 @@
 
     DisplayViewController *dvc = [DisplayViewController new];
 
-    [dvc getBeaconsWithString:self.uuidTxtFld.text];
+  //  [dvc getBeaconsWithString:self.uuidTxtFld.text];
     
 }
 

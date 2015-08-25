@@ -55,16 +55,6 @@
     self.bluetoothManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
 
 
-//    if (self.beacons == 0)
-//    {
-//        self.tableView.hidden = YES;
-//
-//    }
-//    else
-//    {
-//        self.tableView.hidden = NO;
-//    }
-//
 
    // self.mapView.showsUserLocation = YES;
     //[self.mapView setCenterCoordinate:self.mapView.userLocation.location.coordinate animated:YES];
@@ -134,6 +124,7 @@
     [self loadPhotos];
 }
 
+
 -(void)locationManager:(CLLocationManager *)manager didStartMonitoringForRegion:(CLRegion *)region
 {
 
@@ -148,7 +139,7 @@
 
     NSString *message = @"";
     self.beacons = beacons;
-[self.tableView reloadData];
+   // [self.tableView reloadData];
 
 
     NSLog(@"beaconsssss %@", beacons);
@@ -168,7 +159,6 @@
             case CLProximityFar:
                 message = @"You are far away from the beacon";
                 [delegate sendLocalNotificationWithMessage:message];
-                self.mapView.showsUserLocation = YES;
 
                 break;
             case CLProximityNear:
@@ -286,6 +276,23 @@
 
 
     return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.mapView.showsUserLocation = YES;
+    [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
+
+
+
+}
+
+-(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.mapView.showsUserLocation = NO;
+    [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryNone;
+
+
 }
 
 -(void)loadPhotos {
