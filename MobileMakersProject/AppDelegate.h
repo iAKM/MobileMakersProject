@@ -22,6 +22,8 @@
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
+//-(void)getBeaconsWithString:(NSString *)uuid;
+
 
 @end
 

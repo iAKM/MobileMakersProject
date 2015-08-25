@@ -11,8 +11,9 @@
 #import "AppDelegate.h"
 #import "Tag.h"
 #import "Photo.h"
+#import "DisplayViewController.h"
 
-@interface AddTagViewController ()
+@interface AddTagViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property NSManagedObjectContext *moc;
 @property (nonatomic, retain) Photo *photo;
@@ -27,14 +28,10 @@
 
     self.photos = [NSArray new];
 
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     self.moc = delegate.managedObjectContext;
 
     [[self navigationController] setNavigationBarHidden:NO animated:YES]; //does not hide navigation bar
-
-
-//    [self loadPhotos];
-
 
 }
 
@@ -48,21 +45,26 @@
 
     NSLog(@"inserting data");
 
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
     self.moc = delegate.managedObjectContext;
 
-    NSManagedObject *object = [NSEntityDescription insertNewObjectForEntityForName:@"Tag" inManagedObjectContext:self.moc];
-
-    [object setValue:self.nameTxtFld.text forKey:@"name"];
-    [object setValue:self.uuidTxtFld.text forKey:@"uuid"];
-    [object setValue:[NSNumber numberWithInteger:[self.majorTxtFld.text integerValue]] forKey:@"major"];
-    [object setValue:[NSNumber numberWithInteger:[self.minorTxtFld.text integerValue]] forKey:@"minor"];
+    NSManagedObject *newObject = [NSEntityDescription insertNewObjectForEntityForName:@"Tag" inManagedObjectContext:self.moc];
+    
+    [newObject setValue:self.nameTxtFld.text forKey:@"name"];
+    [newObject setValue:[NSNumber numberWithInteger:[self.majorTxtFld.text integerValue]] forKey:@"major"];
+    [newObject setValue:[NSNumber numberWithInteger:[self.minorTxtFld.text integerValue]] forKey:@"minor"];
+    [newObject setValue:self.uuidTxtFld.text forKey:@"uuid"];
+    
 
     [self.moc save:nil];
 
-    NSLog(@"moc is %@", self.moc);
+    DisplayViewController *dvc = [DisplayViewController new];
+
+    [dvc getBeaconsWithString:self.uuidTxtFld.text];
     
 }
+
 
 - (void)loadPhotos {
     NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Photo"];

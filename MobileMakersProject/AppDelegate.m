@@ -18,15 +18,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
-    NSUUID *beaconUUID = [[NSUUID alloc] initWithUUIDString:@"A8188F30-07E9-56B1-8738-DE04F2780D4D"];
-    NSString *regionIdentifier = @"us.iBeaconModules";
-    CLBeaconRegion *beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:beaconUUID identifier:regionIdentifier];
 
     switch ([CLLocationManager authorizationStatus]) {
         case kCLAuthorizationStatusAuthorizedAlways:
             NSLog(@"Authorized Always");
-            break;
+           break;
         case kCLAuthorizationStatusAuthorizedWhenInUse:
             NSLog(@"Authorized when in use");
             break;
@@ -43,33 +39,7 @@
         default:
             break;
     }
-    self.locationManager = [[CLLocationManager alloc] init];
-    if([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
-        [self.locationManager requestAlwaysAuthorization];
-    }
-    self.locationManager.delegate = self;
-    self.locationManager.pausesLocationUpdatesAutomatically = NO;
-    [self.locationManager startMonitoringForRegion:beaconRegion];
-    [self.locationManager startRangingBeaconsInRegion:beaconRegion];
-    [self.locationManager startUpdatingLocation];
-
-    return YES;
-}
-
--(void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
-    [manager startRangingBeaconsInRegion:(CLBeaconRegion*)region];
-    [self.locationManager startUpdatingLocation];
-
-    NSLog(@"You entered the region.");
-    [self sendLocalNotificationWithMessage:@"You entered the region."];
-}
-
--(void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
-    [manager stopRangingBeaconsInRegion:(CLBeaconRegion*)region];
-    [self.locationManager stopUpdatingLocation];
-
-    NSLog(@"You exited the region.");
-    [self sendLocalNotificationWithMessage:@"You exited the region."];
+       return YES;
 }
 
 -(void)sendLocalNotificationWithMessage:(NSString*)message {
@@ -78,43 +48,6 @@
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
 }
 
--(void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region
-{
-    NSString *message = @"";
-
-    UINavigationController *nav = (UINavigationController *)self.window.rootViewController;
-    DisplayViewController *vc = (DisplayViewController *)nav.topViewController;
-    vc.beacons = beacons;
-    [vc.tableView reloadData];
-
-    if(beacons.count > 0) {
-        CLBeacon *nearestBeacon = beacons.firstObject;
-        if(nearestBeacon.proximity == self.lastProximity ||
-           nearestBeacon.proximity == CLProximityUnknown) {
-            return;
-        }
-        self.lastProximity = nearestBeacon.proximity;
-
-        switch(nearestBeacon.proximity) {
-            case CLProximityFar:
-                message = @"You are far away from the beacon";
-                break;
-            case CLProximityNear:
-                message = @"You are near the beacon";
-                break;
-            case CLProximityImmediate:
-                message = @"You are in the immediate proximity of the beacon";
-                break;
-            case CLProximityUnknown:
-                return;
-        }
-    } else {
-        message = @"No beacons are nearby";
-    }
-
-    NSLog(@"%@", message);
-    [self sendLocalNotificationWithMessage:message];
-}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

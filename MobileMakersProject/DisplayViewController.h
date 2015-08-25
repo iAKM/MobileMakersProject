@@ -8,12 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "Photo.h"
+#import <CoreLocation/CoreLocation.h>
 
-@interface DisplayViewController : UIViewController
+@interface DisplayViewController : UIViewController <CLLocationManagerDelegate>
 
 @property (strong) NSArray *beacons;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
+@property CLProximity lastProximity;
+
+
 -(void)loadPhotos;
+-(void)getBeaconsWithString:(NSString *)uuid;
+
 
 @end

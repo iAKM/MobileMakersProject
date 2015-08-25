@@ -15,11 +15,12 @@
 		26341C8C1B827E03002798A2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 26341C8B1B827E03002798A2 /* Images.xcassets */; };
 		26341C8F1B827E03002798A2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26341C8D1B827E03002798A2 /* LaunchScreen.xib */; };
 		26341C9B1B827E04002798A2 /* MobileMakersProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 26341C9A1B827E04002798A2 /* MobileMakersProjectTests.m */; };
+		2651FFD41B8B6797002578F5 /* BeaconHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2651FFD31B8B6797002578F5 /* BeaconHelper.m */; };
+		2651FFD71B8BA410002578F5 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 2651FFD61B8BA410002578F5 /* Tag.m */; };
 		26753DA61B86646500E438F8 /* DisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26753DA51B86646500E438F8 /* DisplayViewController.m */; };
 		26753DA91B8664A700E438F8 /* AddTagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26753DA81B8664A700E438F8 /* AddTagViewController.m */; };
 		26753DAE1B8685B800E438F8 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26753DAD1B8685B800E438F8 /* CoreBluetooth.framework */; };
 		26753DB01B8685C000E438F8 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26753DAF1B8685C000E438F8 /* CoreLocation.framework */; };
-		26753DB31B8687A400E438F8 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 26753DB21B8687A400E438F8 /* Tag.m */; };
 		DC72A83F1B8797C90011122B /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = DC72A83E1B8797C90011122B /* Photo.m */; };
 		DC72A8421B8978D90011122B /* DisplayTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC72A8411B8978D90011122B /* DisplayTableViewCell.m */; };
 /* End PBXBuildFile section */
@@ -49,14 +50,16 @@
 		26341C941B827E03002798A2 /* MobileMakersProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MobileMakersProjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		26341C991B827E04002798A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		26341C9A1B827E04002798A2 /* MobileMakersProjectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MobileMakersProjectTests.m; sourceTree = "<group>"; };
+		2651FFD21B8B6785002578F5 /* BeaconHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BeaconHelper.h; sourceTree = "<group>"; };
+		2651FFD31B8B6797002578F5 /* BeaconHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconHelper.m; sourceTree = "<group>"; };
+		2651FFD51B8BA410002578F5 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
+		2651FFD61B8BA410002578F5 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
 		26753DA41B86646500E438F8 /* DisplayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayViewController.h; sourceTree = "<group>"; };
 		26753DA51B86646500E438F8 /* DisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayViewController.m; sourceTree = "<group>"; };
 		26753DA71B8664A700E438F8 /* AddTagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTagViewController.h; sourceTree = "<group>"; };
 		26753DA81B8664A700E438F8 /* AddTagViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTagViewController.m; sourceTree = "<group>"; };
 		26753DAD1B8685B800E438F8 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		26753DAF1B8685C000E438F8 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		26753DB11B8687A400E438F8 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
-		26753DB21B8687A400E438F8 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
 		DC72A83D1B8797C90011122B /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
 		DC72A83E1B8797C90011122B /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
 		DC72A8401B8978D90011122B /* DisplayTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayTableViewCell.h; sourceTree = "<group>"; };
@@ -86,10 +89,12 @@
 		26341C6F1B827E01002798A2 = {
 			isa = PBXGroup;
 			children = (
+				2651FFD51B8BA410002578F5 /* Tag.h */,
+				2651FFD61B8BA410002578F5 /* Tag.m */,
 				DC72A83D1B8797C90011122B /* Photo.h */,
 				DC72A83E1B8797C90011122B /* Photo.m */,
-				26753DB11B8687A400E438F8 /* Tag.h */,
-				26753DB21B8687A400E438F8 /* Tag.m */,
+				2651FFD21B8B6785002578F5 /* BeaconHelper.h */,
+				2651FFD31B8B6797002578F5 /* BeaconHelper.m */,
 				26753DAF1B8685C000E438F8 /* CoreLocation.framework */,
 				26753DAD1B8685B800E438F8 /* CoreBluetooth.framework */,
 				26341C7A1B827E01002798A2 /* MobileMakersProject */,
@@ -205,6 +210,11 @@
 					26341C771B827E01002798A2 = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = AZU4385ZVQ;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					26341C931B827E03002798A2 = {
 						CreatedOnToolsVersion = 6.4;
@@ -257,9 +267,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				26753DA61B86646500E438F8 /* DisplayViewController.m in Sources */,
+				2651FFD41B8B6797002578F5 /* BeaconHelper.m in Sources */,
 				26753DA91B8664A700E438F8 /* AddTagViewController.m in Sources */,
 				26341C811B827E03002798A2 /* AppDelegate.m in Sources */,
-				26753DB31B8687A400E438F8 /* Tag.m in Sources */,
+				2651FFD71B8BA410002578F5 /* Tag.m in Sources */,
 				DC72A83F1B8797C90011122B /* Photo.m in Sources */,
 				26341C7E1B827E02002798A2 /* main.m in Sources */,
 				26341C871B827E03002798A2 /* SetupViewController.m in Sources */,

@@ -6,18 +6,29 @@
 //  Copyright (c) 2015 iAKM. All rights reserved.
 //
 
+#import <CoreLocation/CoreLocation.h>
 #import "DisplayViewController.h"
 #import "AppDelegate.h"
 #import "Tag.h"
 #import "DisplayTableViewCell.h"
 #import <QuartzCore/QuartzCore.h>
+#import "BeaconHelper.h"
+#import "AddTagViewController.h"
 
-@interface DisplayViewController ()<UITableViewDataSource, UITableViewDelegate>
+
+
+
+@interface DisplayViewController ()<UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 
 @property NSArray *array;
 @property NSManagedObjectContext *moc;
 @property NSArray *tags;
 @property NSArray *imagesFromCoreData;
+@property CLLocationManager *locationManager;
+@property CLBeaconRegion *beaconRegion;
+@property (strong, nonatomic) IBOutlet UILabel *testLabel;
+
+
 
 @end
 
@@ -27,22 +38,48 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-//    [self loadTags];
+    NSLog(@"self.beacons -- %@", self.beacons);
 
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    self.locationManager = delegate.locationManager;
     self.moc = delegate.managedObjectContext;
 
     [[self navigationController] setNavigationBarHidden:YES animated:YES]; // this hides the navigation bar.
 
+        self.locationManager.delegate = self;
 }
+
+-(void)getBeaconsWithString:(NSString *)uuid
+{
+    NSUUID *beaconUUID = [[NSUUID alloc] initWithUUIDString:uuid];
+    NSString *regionIdentifier = @"us.iBeaconModules";
+    CLBeaconRegion *beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:beaconUUID identifier:regionIdentifier];
+
+    self.locationManager = [[CLLocationManager alloc] init];
+    if([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+        [self.locationManager requestAlwaysAuthorization];
+    }
+    self.locationManager.delegate = self;
+    self.locationManager.pausesLocationUpdatesAutomatically = NO;
+    [self.locationManager startMonitoringForRegion:beaconRegion];
+    [self.locationManager startRangingBeaconsInRegion:beaconRegion];
+    [self.locationManager startUpdatingLocation];
+    
+}
+
+
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     self.moc = delegate.managedObjectContext;
+
+    [self getBeaconsWithString:@"EBEFD083-70A2-47C8-9837-E7B5634DF524"];
 
     [self loadTags];
     [self loadPhotos];
+
 
 }
 
@@ -52,6 +89,53 @@
     [self loadPhotos];
 }
 
+-(void)locationManager:(CLLocationManager *)manager didStartMonitoringForRegion:(CLRegion *)region
+{
+
+}
+
+
+-(void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region
+{
+
+
+    NSString *message = @"";
+    self.beacons = beacons;
+    [self.tableView reloadData];
+
+
+    NSLog(@"beaconsssss %@", beacons);
+
+
+    if(beacons.count > 0)
+    {
+        CLBeacon *nearestBeacon = beacons.firstObject;
+        if(nearestBeacon.proximity == self.lastProximity || nearestBeacon.proximity == CLProximityUnknown)
+        {
+
+            return;
+        }
+        self.lastProximity = nearestBeacon.proximity;
+
+        switch(nearestBeacon.proximity) {
+            case CLProximityFar:
+                message = @"You are far away from the beacon";
+                break;
+            case CLProximityNear:
+                message = @"You are near the beacon";
+                break;
+            case CLProximityImmediate:
+                message = @"You are in the immediate proximity of the beacon";
+                break;
+            case CLProximityUnknown:
+                return;
+        }
+    } else {
+        message = @"No beacons are nearby";
+    }
+
+    NSLog(@"%@", message);
+}
 
 -(void)loadTags
 {
@@ -59,8 +143,27 @@
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Tag"];
     self.tags = [self.moc executeFetchRequest:request error:nil];
     NSLog(@"self.tags --- %@", self.tags);
+
+    NSLog(@"uuid from core data = %@",self.tags);
+
     [self.tableView reloadData];
 }
+
+-(void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
+    [manager startRangingBeaconsInRegion:(CLBeaconRegion*)region];
+      [self.locationManager startMonitoringForRegion:(CLBeaconRegion *)region];
+    [self.locationManager startUpdatingLocation];
+
+}
+
+-(void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
+    [manager stopRangingBeaconsInRegion:(CLBeaconRegion*)region];
+
+    [self.locationManager stopUpdatingLocation];
+
+    NSLog(@"You exited the region.");
+}
+
 
 #pragma mark UITableView Datasource & Delegate Methods
 
@@ -73,17 +176,21 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DisplayTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
-    Tag *tag = [self.tags objectAtIndex:indexPath.row];
-    Photo *photo = self.imagesFromCoreData[indexPath.row];
+
+   DisplayTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
+   // Tag *tag = [self.tags objectAtIndex:indexPath.row];
+  // Photo *photo = self.imagesFromCoreData[indexPath.row];
 
 
-    NSData *data = photo.imageData;
-    cell.textLabel.text = tag.name;
+   // NSData *data = photo.imageData;
+   // UIImage *image = [UIImage imageWithData:data];
+  //  cell.imageView.image = image;
 
-    UIImage *image = [UIImage imageWithData:data];
-    cell.imageView.image = image;
 
+
+
+
+    
 //BEACONS
 
     CLBeacon *beacon = (CLBeacon*)[self.beacons objectAtIndex:indexPath.row];
@@ -91,18 +198,36 @@
     switch (beacon.proximity) {
         case CLProximityFar:
             proximityLabel = @"Far";
+            self.view.backgroundColor = [UIColor orangeColor];
             break;
         case CLProximityNear:
             proximityLabel = @"Near";
+            self.view.backgroundColor = [UIColor yellowColor];
             break;
         case CLProximityImmediate:
             proximityLabel = @"Immediate";
+            self.view.backgroundColor = [UIColor blueColor];
             break;
         case CLProximityUnknown:
             proximityLabel = @"Unknown";
+            self.view.backgroundColor = [UIColor redColor];
+
             break;
     }
-    cell.detailTextLabel.text = proximityLabel;
+
+    cell.textLabel.text = proximityLabel;
+
+
+    NSString *detailLabel = [NSString stringWithFormat:@"Accuracy: %f", beacon.accuracy];
+
+
+   // NSString *detailLabel = [NSString stringWithFormat:@"Major: %d, Minor: %d, RSSI: %d, UUID: %@",beacon.major.intValue,
+                         //    beacon.minor.intValue, (int)beacon.rssi, beacon.proximityUUID.UUIDString];
+
+    cell.detailTextLabel.text = detailLabel;
+
+
+
 
     return cell;
 }
@@ -141,17 +266,6 @@
     }
 }
 
--(void)populateWithTagsIfEmpty
-{
-//    if (self.tags.count <=0)
-//    {
-//        Tag *tag = [NSEntityDescription insertNewObjectForEntityForName:@"Tag" inManagedObjectContext:self.moc];
-//
-//        
-//    }
-
-    
-}
 
 
 @end
