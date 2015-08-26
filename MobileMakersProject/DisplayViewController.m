@@ -139,7 +139,7 @@
 
     NSString *message = @"";
     self.beacons = beacons;
-   // [self.tableView reloadData];
+    [self.tableView reloadData];
 
 
     NSLog(@"beaconsssss %@", beacons);
@@ -237,26 +237,26 @@
     switch (beacon.proximity)
         {
         case CLProximityFar:
-            proximityLabel = @"Oops..your dog is getting far";
-          //  self.view.backgroundColor = [UIColor orangeColor];
-            cell.backgroundColor = [UIColor orangeColor];
+            proximityLabel = [NSString stringWithFormat:@"Your %@ is Far", tag.name];
+            cell.backgroundColor = [UIColor colorWithRed:(255/255.0) green:(107/255.0) blue:(105/255.0) alpha:1];
 
             break;
         case CLProximityNear:
-            proximityLabel = @"Keep looking. You may find your dog nearby";
+            proximityLabel = [NSString stringWithFormat:@"Your %@ is Near", tag.name];
            // self.view.backgroundColor = [UIColor yellowColor];
-            cell.backgroundColor = [UIColor yellowColor];
+            cell.backgroundColor = [UIColor colorWithRed:(96/255.0) green:(102/255.0) blue:(232/255.0) alpha:1];
 
             break;
         case CLProximityImmediate:
-            proximityLabel = @"look out. your dog mighr be next to you";
+            proximityLabel = [NSString stringWithFormat:@"Your %@ is Close", tag.name];
           //  self.view.backgroundColor = [UIColor blueColor];
-            cell.backgroundColor = [UIColor greenColor];
+            cell.backgroundColor = [UIColor colorWithRed:(118/255.0) green:(225/255.0) blue:(167/255.0) alpha:1];
+
             break;
         case CLProximityUnknown:
-            proximityLabel = @"Unknown";
+            proximityLabel = @"Fetching Location";
           //  self.view.backgroundColor = [UIColor redColor];
-            cell.backgroundColor = [UIColor redColor];
+            cell.backgroundColor = [UIColor whiteColor];
             
 
             break;
