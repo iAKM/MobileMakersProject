@@ -226,7 +226,7 @@
                                     <rect key="frame" x="0.0" y="64" width="400" height="227"/>
                                 </variation>
                                 <connections>
-                                    <outlet property="delegate" destination="6bd-Aw-LwH" id="sKy-6w-EdF"/>
+                                    <outlet property="delegate" destination="6bd-Aw-LwH" id="Dez-c3-6iZ"/>
                                 </connections>
                             </mapView>
                         </subviews>

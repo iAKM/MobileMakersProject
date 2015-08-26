@@ -17,7 +17,7 @@
 #import "BeaconHelper.h"
 #import "AddTagViewController.h"
 
-@interface DisplayViewController ()<UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, UIApplicationDelegate, CBCentralManagerDelegate>
+@interface DisplayViewController ()<UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, UIApplicationDelegate, CBCentralManagerDelegate, MKMapViewDelegate>
 @property NSArray *array;
 @property NSManagedObjectContext *moc;
 @property NSMutableArray *tags;
@@ -54,15 +54,61 @@
 
     self.bluetoothManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
 
+    self.mmAnnot = [MKPointAnnotation new];
 
 
-   // self.mapView.showsUserLocation = YES;
+
+
+
+    self.mapView.showsUserLocation = YES;
     //[self.mapView setCenterCoordinate:self.mapView.userLocation.location.coordinate animated:YES];
    // MKCoordinateSpan span = MKCoordinateSpanMake(0.05, 0.05);
 
     //[self.mapView setCenterCoordinate:CLLocationCoordinate2DMake(self.mapView.userLocation, span) animated:YES)];
 
 }
+
+-(void)getCurrentLocation
+{
+    self.locationManager.delegate = self;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+
+    [self.locationManager startUpdatingLocation];
+
+}
+
+-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+{
+    if ([annotation isEqual:mapView.userLocation])
+    {
+        return nil;
+    }
+
+    MKPinAnnotationView *pin = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:nil];
+
+    if ([annotation isEqual:self.mmAnnot])
+    {
+        pin.image = [UIImage imageNamed:@"pinDog"];
+
+    }
+
+    pin.canShowCallout = NO;
+
+
+    return pin;
+
+
+}
+
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    [locations lastObject];
+    NSLog(@"location - %@", locations.lastObject);
+
+}
+
+
+
 
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central {
    if(central.state == CBCentralManagerStatePoweredOff) {
@@ -142,7 +188,7 @@
     [self.tableView reloadData];
 
 
-    NSLog(@"beaconsssss %@", beacons);
+   // NSLog(@"beaconsssss %@", beacons);
 
 
     if(beacons.count > 0)
@@ -190,32 +236,12 @@
     [self.tableView reloadData];
 }
 
-//-(void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
-//    [manager startRangingBeaconsInRegion:(CLBeaconRegion*)region];
-//      [self.locationManager startMonitoringForRegion:(CLBeaconRegion *)region];
-//    [self.locationManager startUpdatingLocation];
-//
-//    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//
-//
-//}
-//
-//-(void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
-//    [manager stopRangingBeaconsInRegion:(CLBeaconRegion*)region];
-//
-//    [self.locationManager stopUpdatingLocation];
-//
-//    NSLog(@"You exited the region.");
-//}
-//
-//
 #pragma mark UITableView Datasource & Delegate Methods
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.tags.count;
     return self.beacons.count;
-//    return self.imagesFromCoreData.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -239,6 +265,7 @@
         case CLProximityFar:
             proximityLabel = [NSString stringWithFormat:@"Your %@ is Far", tag.name];
             cell.backgroundColor = [UIColor colorWithRed:(255/255.0) green:(107/255.0) blue:(105/255.0) alpha:1];
+
 
             break;
         case CLProximityNear:
@@ -281,17 +308,30 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.mapView.showsUserLocation = YES;
-    [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
+
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 800, 800);
+    [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
 
 
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+
+    if (cell.accessoryType == UITableViewCellAccessoryCheckmark)
+    {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+    else
+    {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }
 
 }
 
 -(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.accessoryView.hidden = YES;
     self.mapView.showsUserLocation = NO;
-    [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryNone;
-
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
 }
 
