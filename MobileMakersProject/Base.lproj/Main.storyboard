@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8a7-el-4ub">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8a7-el-4ub">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -220,18 +220,9 @@
                                     <rect key="frame" x="0.0" y="64" width="400" height="227"/>
                                 </variation>
                                 <connections>
-                                    <outlet property="delegate" destination="6bd-Aw-LwH" id="sKy-6w-EdF"/>
+                                    <outlet property="delegate" destination="6bd-Aw-LwH" id="Dez-c3-6iZ"/>
                                 </connections>
                             </mapView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BS4-NL-YiQ">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="36" y="167" width="42" height="21"/>
-                                </variation>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.37647058820000001" green="0.40000000000000002" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -244,7 +235,6 @@
                                 <exclude reference="VK8-7z-fKm"/>
                                 <exclude reference="rrB-H4-wLw"/>
                                 <exclude reference="aOv-ie-OBv"/>
-                                <exclude reference="BS4-NL-YiQ"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="7hk-gC-RjF"/>
@@ -257,7 +247,6 @@
                                 <include reference="VK8-7z-fKm"/>
                                 <include reference="rrB-H4-wLw"/>
                                 <include reference="aOv-ie-OBv"/>
-                                <include reference="BS4-NL-YiQ"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="7hk-gC-RjF"/>
@@ -271,7 +260,6 @@
                     <connections>
                         <outlet property="mapView" destination="aOv-ie-OBv" id="Hzh-IR-jji"/>
                         <outlet property="tableView" destination="VK8-7z-fKm" id="LUq-nI-5RZ"/>
-                        <outlet property="testLabel" destination="BS4-NL-YiQ" id="aOu-qy-NQx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gtS-wq-l8T" userLabel="First Responder" sceneMemberID="firstResponder"/>

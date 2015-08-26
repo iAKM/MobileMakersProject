@@ -32,8 +32,12 @@
    // self.detailTextLabel.frame = CGRectMake(16, 69, 150, 14);
     
 
-    self.imageView.layer.cornerRadius = self.imageView.frame.size.width/2.0;
+    self.imageView.layer.cornerRadius = 10.0f;
     self.imageView.clipsToBounds = YES;
+
+    self.imageView.layer.borderWidth = 3.0f;
+    self.imageView.layer.borderColor = [UIColor whiteColor].CGColor;
+
 
 }
 
