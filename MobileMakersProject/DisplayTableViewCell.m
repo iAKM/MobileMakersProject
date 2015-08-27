@@ -12,6 +12,16 @@
 
 @dynamic imageView;
 
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self)
+    {
+
+    }
+    return self;
+}
+
 
 - (void)awakeFromNib {
     // Initialization code
@@ -26,18 +36,33 @@
 - (void) layoutSubviews
 {
     [super layoutSubviews];
+    
+   // [self cardViewSetup];
+    [self imageSetup];
 
+
+}
+
+//-(void)cardViewSetup
+//{
+//    [self.cardView setAlpha:1];
+//    self.cardView.layer.masksToBounds = NO;
+//    self.cardView.layer.cornerRadius = 1;
+//    UIBezierPath *path = [UIBezierPath bezierPathWithRect:self.cardView.bounds];
+//    self.cardView.layer.shadowPath = path.CGPath;
+//    self.cardView.layer.shadowOpacity = 0.2;
+//
+//}
+
+
+-(void)imageSetup
+{
     self.imageView.frame = CGRectMake(8, 25, 75, 75); // image positioning here
-
-    // self.textLabel.frame = CGRectMake(15, 0, 370, 131);
-   // self.detailTextLabel.frame = CGRectMake(16, 69, 150, 14);
-
     self.imageView.layer.cornerRadius = 10.0f;
     self.imageView.clipsToBounds = YES;
 
     self.imageView.layer.borderWidth = 3.0f;
     self.imageView.layer.borderColor = [UIColor whiteColor].CGColor;
-
 }
 
 @end

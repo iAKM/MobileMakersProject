@@ -58,7 +58,7 @@
 
     [self.moc save:nil];
 
-    DisplayViewController *dvc = [DisplayViewController new];
+   // DisplayViewController *dvc = [DisplayViewController new];
 
   //  [dvc getBeaconsWithString:self.uuidTxtFld.text];
     

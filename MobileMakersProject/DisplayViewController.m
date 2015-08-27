@@ -18,31 +18,26 @@
 #import "AddTagViewController.h"
 
 @interface DisplayViewController ()<UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, UIApplicationDelegate, CBCentralManagerDelegate, MKMapViewDelegate>
+
+@property (strong, nonatomic) IBOutlet UILabel *testLabel;
+@property (strong, nonatomic) IBOutlet MKMapView *mapView;
+@property (strong, nonatomic) CLLocation *location;
 @property NSArray *array;
 @property NSManagedObjectContext *moc;
 @property NSMutableArray *tags;
 @property CLLocationManager *locationManager;
 @property CLBeaconRegion *beaconRegion;
-@property (strong, nonatomic) IBOutlet UILabel *testLabel;
-@property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property MKPointAnnotation *mmAnnot;
 @property CBCentralManager *bluetoothManager;
-
-
-
-
-
 
 @end
 
 @implementation DisplayViewController
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     NSLog(@"self.beacons -- %@", self.beacons);
-
 
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     self.locationManager = delegate.locationManager;
@@ -57,14 +52,9 @@
     self.mmAnnot = [MKPointAnnotation new];
 
 
-
-
-
     self.mapView.showsUserLocation = YES;
-    //[self.mapView setCenterCoordinate:self.mapView.userLocation.location.coordinate animated:YES];
-   // MKCoordinateSpan span = MKCoordinateSpanMake(0.05, 0.05);
 
-    //[self.mapView setCenterCoordinate:CLLocationCoordinate2DMake(self.mapView.userLocation, span) animated:YES)];
+    [self captureLocation];
 
 }
 
@@ -102,19 +92,27 @@
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    [locations lastObject];
-    NSLog(@"location - %@", locations.lastObject);
+
+    CLLocation *location = [locations lastObject];
+    NSLog(@"location - %f", location.coordinate.latitude);
+
+    NSLog(@"locations.count == %li", locations.count);
+
+
 
 }
-
-
-
 
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central {
    if(central.state == CBCentralManagerStatePoweredOff) {
 
        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Bluettoth is Off" message:@"Please turn on the bluetooth by pulling up control center" delegate:self cancelButtonTitle:@"Got It" otherButtonTitles:nil, nil];
        [alertView show];
+       [self.tableView reloadData];
+
+    }
+    else if (central.state == CBCentralManagerStatePoweredOn)
+    {
+        [self.tableView reloadData];
 
     }
 }
@@ -152,16 +150,6 @@
 
     [[self navigationController] setNavigationBarHidden:YES animated:YES]; // this hides the navigation bar.
 
-//    if (self.beacons == 0)
-//    {
-//        self.tableView.hidden = YES;
-//
-//    }
-//    else
-//    {
-//        self.tableView.hidden = NO;
-//    }
-
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -178,10 +166,6 @@
 
 -(void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region
 {
-
-    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-
-
 
     NSString *message = @"";
     self.beacons = beacons;
@@ -204,7 +188,6 @@
         switch(nearestBeacon.proximity) {
             case CLProximityFar:
                 message = @"You are far away from the beacon";
-                [delegate sendLocalNotificationWithMessage:message];
 
                 break;
             case CLProximityNear:
@@ -212,7 +195,6 @@
                 break;
             case CLProximityImmediate:
                 message = @"You are in the immediate proximity of the beacon";
-                [delegate sendLocalNotificationWithMessage:message];
 
                 break;
             case CLProximityUnknown:
@@ -236,6 +218,40 @@
     [self.tableView reloadData];
 }
 
+-(void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
+    [manager stopRangingBeaconsInRegion:(CLBeaconRegion*)region];
+    [self.locationManager stopUpdatingLocation];
+
+
+
+    NSLog(@"You exited the region.");
+}
+
+
+-(void)captureLocation
+{
+    [self.locationManager startUpdatingLocation];
+
+    NSArray *locations;
+
+    [self locationManager:self.locationManager didUpdateLocations:locations];
+
+    CLLocation *location = [locations lastObject];
+
+    NSLog(@"locavfdvtion --- %@", location);
+
+
+
+    self.mmAnnot.coordinate = CLLocationCoordinate2DMake( location.coordinate.latitude, location.coordinate.longitude);
+
+    [self.locationManager stopUpdatingLocation];
+
+    NSLog(@"cooooo %f", self.mmAnnot.coordinate.longitude);
+
+
+}
+
+
 #pragma mark UITableView Datasource & Delegate Methods
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -254,10 +270,17 @@
     UIImage *image = [UIImage imageWithData:data];
     cell.imageView.image = image;
 
-
 //BEACONS
     if (self.beacons.count > 0)
     {
+        if (self.bluetoothManager.state == CBCentralManagerStatePoweredOff)
+        {
+            cell.proxLabel.text = @"I said turn on the bluetooth x(";
+
+        }
+        else
+        {
+
     CLBeacon *beacon = [self.beacons objectAtIndex:indexPath.row];
     NSString *proximityLabel = @"";
     switch (beacon.proximity)
@@ -265,29 +288,23 @@
         case CLProximityFar:
             proximityLabel = [NSString stringWithFormat:@"Your %@ is Far", tag.name];
             cell.backgroundColor = [UIColor colorWithRed:(255/255.0) green:(107/255.0) blue:(105/255.0) alpha:1];
-
-
             break;
+
         case CLProximityNear:
             proximityLabel = [NSString stringWithFormat:@"Your %@ is Near", tag.name];
-           // self.view.backgroundColor = [UIColor yellowColor];
             cell.backgroundColor = [UIColor colorWithRed:(96/255.0) green:(102/255.0) blue:(232/255.0) alpha:1];
 
             break;
         case CLProximityImmediate:
             proximityLabel = [NSString stringWithFormat:@"Your %@ is Close", tag.name];
-          //  self.view.backgroundColor = [UIColor blueColor];
-            cell.backgroundColor = [UIColor colorWithRed:(118/255.0) green:(225/255.0) blue:(167/255.0) alpha:1];
-
+                cell.backgroundColor = [UIColor colorWithRed:(118/255.0) green:(225/255.0) blue:(167/255.0) alpha:1];
             break;
-        case CLProximityUnknown:
+
+            case CLProximityUnknown:
             proximityLabel = @"Fetching Location";
-          //  self.view.backgroundColor = [UIColor redColor];
             cell.backgroundColor = [UIColor whiteColor];
-            
-
             break;
-    }
+        }
         cell.nameLabel.text = tag.name;
 
     NSString *detailLabel = [NSString stringWithFormat:@"%@, Dist: %0.001f", proximityLabel, beacon.accuracy];
@@ -299,8 +316,7 @@
     cell.proxLabel.text = detailLabel;
 
     }
-
-
+    }
 
     return cell;
 }
