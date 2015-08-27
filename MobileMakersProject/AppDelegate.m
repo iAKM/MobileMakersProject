@@ -56,6 +56,27 @@
 
     [[UIApplication sharedApplication] registerUserNotificationSettings:mySettings];
 
+    UIStoryboard * myStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+
+    BOOL ranBefore = [[NSUserDefaults standardUserDefaults] boolForKey:@"ranBefore"];
+
+    if (!ranBefore)
+    {
+        SetupViewController * initialViewController = [myStoryboard instantiateViewControllerWithIdentifier:@"StoryboardID"];
+        [self.window setRootViewController:initialViewController];
+
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"ranBefore"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    else
+    {
+        DisplayViewController * defaultViewController = [myStoryboard instantiateInitialViewController];
+        [self.window setRootViewController:defaultViewController];
+    }
+    
+
+
+
        return YES;
 }
 
