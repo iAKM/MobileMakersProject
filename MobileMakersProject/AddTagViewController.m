@@ -38,8 +38,6 @@
     UIImage *image = self.imageView.image; //image
     NSData *imageData = UIImagePNGRepresentation(image); //image
 
-//    self.photo = [NSEntityDescription insertNewObjectForEntityForName:@"Photo"inManagedObjectContext:self.moc];
-
     NSLog(@"inserting data");
 
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -54,8 +52,6 @@
    // [newObject setValue:self.uuidTxtFld.text forKey:@"uuid"];
     [newObject setValue:imageData forKey:@"image"];
 
-    
-
     [self.moc save:nil];
 
    // DisplayViewController *dvc = [DisplayViewController new];
@@ -63,7 +59,6 @@
   //  [dvc getBeaconsWithString:self.uuidTxtFld.text];
     
 }
-
 
 - (void)loadPhotos {
     NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Tag"];

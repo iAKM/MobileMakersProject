@@ -19,7 +19,6 @@
 
 @interface DisplayViewController ()<UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, UIApplicationDelegate, CBCentralManagerDelegate, MKMapViewDelegate>
 
-@property (strong, nonatomic) IBOutlet UILabel *testLabel;
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) CLLocation *location;
 @property NSArray *array;
@@ -58,6 +57,45 @@
 
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    self.moc = delegate.managedObjectContext;
+
+    [self getBeaconsWithString:@"EBEFD083-70A2-47C8-9837-E7B5634DF524"];
+
+    [self loadTags];
+    [self loadPhotos];
+
+    [[self navigationController] setNavigationBarHidden:YES animated:YES]; // this hides the navigation bar.
+
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self loadPhotos];
+}
+
+
+-(void)getBeaconsWithString:(NSString *)uuid
+{
+    NSUUID *beaconUUID = [[NSUUID alloc] initWithUUIDString:uuid];
+    NSString *regionIdentifier = @"us.iBeaconModules";
+    CLBeaconRegion *beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:beaconUUID identifier:regionIdentifier];
+
+    self.locationManager = [[CLLocationManager alloc] init];
+    if([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+        [self.locationManager requestAlwaysAuthorization];
+    }
+    self.locationManager.delegate = self;
+    self.locationManager.pausesLocationUpdatesAutomatically = NO;
+    [self.locationManager startMonitoringForRegion:beaconRegion];
+    [self.locationManager startRangingBeaconsInRegion:beaconRegion];
+    [self.locationManager startUpdatingLocation];
+    
+}
+
 -(void)getCurrentLocation
 {
     self.locationManager.delegate = self;
@@ -87,75 +125,23 @@
 
     return pin;
 
-
 }
+
+-(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 15000, 15000);
+    [self.mapView setRegion:[self.mapView regionThatFits:region] animated:NO];
+}
+
+#pragma mark CLLoc Delegate Methods
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-
     CLLocation *location = [locations lastObject];
     NSLog(@"location - %f", location.coordinate.latitude);
 
     NSLog(@"locations.count == %li", locations.count);
-
 }
-
-- (void)centralManagerDidUpdateState:(CBCentralManager *)central {
-   if(central.state == CBCentralManagerStatePoweredOff) {
-
-       UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Bluettoth is Off" message:@"Please turn on the bluetooth by pulling up control center" delegate:self cancelButtonTitle:@"Got It" otherButtonTitles:nil, nil];
-       [alertView show];
-       [self.tableView reloadData];
-
-    }
-    else if (central.state == CBCentralManagerStatePoweredOn)
-    {
-        [self.tableView reloadData];
-
-    }
-}
-
-
-
--(void)getBeaconsWithString:(NSString *)uuid
-{
-    NSUUID *beaconUUID = [[NSUUID alloc] initWithUUIDString:uuid];
-    NSString *regionIdentifier = @"us.iBeaconModules";
-    CLBeaconRegion *beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:beaconUUID identifier:regionIdentifier];
-
-    self.locationManager = [[CLLocationManager alloc] init];
-    if([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
-        [self.locationManager requestAlwaysAuthorization];
-    }
-    self.locationManager.delegate = self;
-    self.locationManager.pausesLocationUpdatesAutomatically = NO;
-    [self.locationManager startMonitoringForRegion:beaconRegion];
-    [self.locationManager startRangingBeaconsInRegion:beaconRegion];
-    [self.locationManager startUpdatingLocation];
-
-}
-
-
--(void)viewWillAppear:(BOOL)animated
-{
-    AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    self.moc = delegate.managedObjectContext;
-
-    [self getBeaconsWithString:@"EBEFD083-70A2-47C8-9837-E7B5634DF524"];
-
-    [self loadTags];
-    [self loadPhotos];
-
-    [[self navigationController] setNavigationBarHidden:YES animated:YES]; // this hides the navigation bar.
-
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [self loadPhotos];
-}
-
 
 -(void)locationManager:(CLLocationManager *)manager didStartMonitoringForRegion:(CLRegion *)region
 {
@@ -168,10 +154,6 @@
     NSString *message = @"";
     self.beacons = beacons;
     [self.tableView reloadData];
-
-
-   // NSLog(@"beaconsssss %@", beacons);
-
 
     if(beacons.count > 0)
     {
@@ -204,20 +186,11 @@
     NSLog(@"%@", message);
 }
 
--(void)loadTags
-{
-
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Tag"];
-    self.tags = (NSMutableArray *)[self.moc executeFetchRequest:request error:nil];
-    [self.tableView reloadData];
-}
-
 -(void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
     [manager stopRangingBeaconsInRegion:(CLBeaconRegion*)region];
     [self.locationManager stopUpdatingLocation];
 
 }
-
 
 -(void)captureLocation
 {
@@ -240,6 +213,21 @@
     NSLog(@"cooooo %f", self.mmAnnot.coordinate.longitude);
 
 
+}
+
+- (void)centralManagerDidUpdateState:(CBCentralManager *)central {
+    if(central.state == CBCentralManagerStatePoweredOff) {
+
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Bluettoth is Off" message:@"Please turn on the bluetooth by pulling up control center" delegate:self cancelButtonTitle:@"Got It" otherButtonTitles:nil, nil];
+        [alertView show];
+        [self.tableView reloadData];
+
+    }
+    else if (central.state == CBCentralManagerStatePoweredOn)
+    {
+        [self.tableView reloadData];
+        
+    }
 }
 
 
@@ -342,15 +330,6 @@
 
 }
 
--(void)loadPhotos {
-    NSFetchRequest *requestPhotos = [[NSFetchRequest alloc]initWithEntityName:@"Tag"];
-    [requestPhotos setReturnsObjectsAsFaults:NO];
-    [requestPhotos setRelationshipKeyPathsForPrefetching:@[@"comments"]];
-    self.tags = [[self.moc executeFetchRequest:requestPhotos error:nil] mutableCopy];
-    NSLog(@"you have %li photos", self.tags.count);
-
-    [self.tableView reloadData];
-}
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
@@ -372,6 +351,23 @@
 
         [self.moc save:nil];
     }
+}
+
+-(void)loadPhotos {
+    NSFetchRequest *requestPhotos = [[NSFetchRequest alloc]initWithEntityName:@"Tag"];
+    [requestPhotos setReturnsObjectsAsFaults:NO];
+    [requestPhotos setRelationshipKeyPathsForPrefetching:@[@"comments"]];
+    self.tags = [[self.moc executeFetchRequest:requestPhotos error:nil] mutableCopy];
+    NSLog(@"you have %li photos", self.tags.count);
+
+    [self.tableView reloadData];
+}
+
+-(void)loadTags
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Tag"];
+    self.tags = (NSMutableArray *)[self.moc executeFetchRequest:request error:nil];
+    [self.tableView reloadData];
 }
 
 @end
