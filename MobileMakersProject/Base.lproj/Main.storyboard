@@ -66,18 +66,29 @@
                                     <rect key="frame" x="70" y="72" width="260" height="40"/>
                                 </variation>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NXp-x2-FNY">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="170" y="196" width="42" height="21"/>
+                                </variation>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.37647058823529411" green="0.40000000000000002" blue="0.90980392156862744" alpha="1" colorSpace="calibratedRGB"/>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="WdF-lf-NuS"/>
                                 <exclude reference="AV0-bf-GmC"/>
+                                <exclude reference="NXp-x2-FNY"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="WdF-lf-NuS"/>
                                 <include reference="AV0-bf-GmC"/>
+                                <include reference="NXp-x2-FNY"/>
                             </mask>
                         </variation>
                     </view>

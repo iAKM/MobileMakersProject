@@ -122,8 +122,6 @@
     if(central.state == CBCentralManagerStatePoweredOff) {
 
         [self sendLocalNotificationWithMessage:@"Please enable bluetooth to make the most out of TAG. :)"];
-
-        
     }
 }
 

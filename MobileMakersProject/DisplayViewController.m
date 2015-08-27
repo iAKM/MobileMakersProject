@@ -98,8 +98,6 @@
 
     NSLog(@"locations.count == %li", locations.count);
 
-
-
 }
 
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central {
@@ -211,10 +209,6 @@
 
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Tag"];
     self.tags = (NSMutableArray *)[self.moc executeFetchRequest:request error:nil];
-    NSLog(@"self.tags --- %@", self.tags);
-
-    NSLog(@"uuid from core data = %@",self.tags);
-
     [self.tableView reloadData];
 }
 
@@ -222,9 +216,6 @@
     [manager stopRangingBeaconsInRegion:(CLBeaconRegion*)region];
     [self.locationManager stopUpdatingLocation];
 
-
-
-    NSLog(@"You exited the region.");
 }
 
 
