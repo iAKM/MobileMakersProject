@@ -2,12 +2,14 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14D131" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Tag" representedClassName="Tag" syncable="YES">
         <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="lastSeenLat" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="lastSeenLon" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="major" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="minor" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="uuid" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Tag" positionX="-54" positionY="-9" width="128" height="120"/>
+        <element name="Tag" positionX="-54" positionY="-9" width="128" height="150"/>
     </elements>
 </model>

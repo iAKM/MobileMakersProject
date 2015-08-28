@@ -20,6 +20,7 @@
 @interface DisplayViewController ()<UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, UIApplicationDelegate, CBCentralManagerDelegate, MKMapViewDelegate>
 
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
+@property (strong, nonatomic) IBOutlet UILabel *locLabel;
 @property (strong, nonatomic) CLLocation *location;
 @property NSArray *array;
 @property NSManagedObjectContext *moc;
@@ -32,7 +33,7 @@
 @property CLGeocoder *geocoder;
 @property CLPlacemark *placemark;
 
-
+@property BOOL isUpdated;
 @end
 
 @implementation DisplayViewController
@@ -40,6 +41,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    self.isUpdated = false;
     NSLog(@"self.beacons -- %@", self.beacons);
 
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -142,8 +144,12 @@
 
 -(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 15000, 15000);
-    [self.mapView setRegion:[self.mapView regionThatFits:region] animated:NO];
+    if(!self.isUpdated) {
+        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 15000, 15000);
+        [self.mapView setRegion:[self.mapView regionThatFits:region] animated:NO];
+        
+        self.isUpdated = true;
+    }
 }
 
 #pragma mark CLLoc Delegate Methods
@@ -166,10 +172,13 @@
 
     NSString *message = @"";
     self.beacons = beacons;
+    beacons = [beacons lastObject];
+    NSLog(@"last object is %@", beacons);
+
     [self.tableView reloadData];
 
-    NSLog(@"Beaconssss %@", beacons);
-    NSLog(@"Bea - %@", self.beacons);
+   // NSLog(@"Beaconssss %@", beacons);
+   // NSLog(@"Bea - %@", self.beacons);
 
 
     if(beacons.count > 0)
@@ -205,6 +214,9 @@
 
 -(void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
     [manager stopRangingBeaconsInRegion:(CLBeaconRegion*)region];
+    Tag *tag = self.tags.firstObject;
+    tag.lastSeenLat = [NSNumber numberWithDouble:self.mapView.userLocation.coordinate.latitude];
+    tag.lastSeenLon = [NSNumber numberWithDouble:self.mapView.userLocation.coordinate.latitude];
     [self.locationManager stopUpdatingLocation];
 
 }
@@ -252,6 +264,12 @@
     CLGeocoder *geo = [[CLGeocoder alloc] init];
     CLLocation *loc = [[CLLocation alloc]initWithLatitude:self.mapView.userLocation.coordinate.latitude longitude:self.mapView.userLocation.coordinate.longitude];
 
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 800, 800);
+    [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
+
+
+
+
     [geo reverseGeocodeLocation:loc completionHandler:^(NSArray *placemarks, NSError *error) {
         CLPlacemark *placemark = [placemarks objectAtIndex:0];
 
@@ -269,7 +287,13 @@
 
         NSLog(@"location >>>> %@", placemark.location);
 
-        NSLog(@"I am currently at %@:", locatedAt);
+        NSLog(@"You are at: %@:", locatedAt);
+
+
+       // NSString *loc = [NSString stringWithFormat:@"You are at: %@, %@, %@", placemark.subLocality, placemark.locality, placemark.country];
+
+        self.locLabel.text = locatedAt;
+        
 
 
 
@@ -419,15 +443,6 @@
     self.tags = (NSMutableArray *)[self.moc executeFetchRequest:request error:nil];
     [self.tableView reloadData];
 }
-
-
-
-
-
-
-
-
-
 
 
 @end

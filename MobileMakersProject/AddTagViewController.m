@@ -15,6 +15,7 @@
 
 @interface AddTagViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
+@property (weak, nonatomic) IBOutlet UIImageView *cameraImage;
 @property NSManagedObjectContext *moc;
 @property (nonatomic, copy) NSArray *photos;
 
@@ -23,6 +24,7 @@
 @implementation AddTagViewController
 
 - (void)viewDidLoad {
+
     [super viewDidLoad];
 
     self.photos = [NSArray new];
@@ -30,11 +32,16 @@
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     self.moc = delegate.managedObjectContext;
 
-    [[self navigationController] setNavigationBarHidden:NO animated:YES]; //does not hide navigation bar
+    [[self navigationController] setNavigationBarHidden:NO animated:YES]; //
 
+    self.cameraImage.layer.cornerRadius = 10.0f;
+    self.cameraImage.clipsToBounds = YES;
+
+    self.cameraImage.layer.borderWidth = 3.0f;
+    self.cameraImage.layer.borderColor = [UIColor whiteColor].CGColor;
 }
 
-- (IBAction)onActivateButtonPressed:(UIButton *)sender {
+- (IBAction)onContinueButtonPressed:(UIButton *)sender {
 
     UIImage *image = self.imageView.image; //image
     NSData *imageData = UIImagePNGRepresentation(image); //image
@@ -58,10 +65,10 @@
    // DisplayViewController *dvc = [DisplayViewController new];
 
   //  [dvc getBeaconsWithString:self.uuidTxtFld.text];
-    
 }
 
 - (void)loadPhotos {
+
     NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Tag"];
     self.photos = [self.moc executeFetchRequest:request error:nil];
     NSLog(@"you have %li photos", self.photos.count);
@@ -175,8 +182,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     }
 }
 
-
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -186,6 +193,5 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     [textField resignFirstResponder];
     return YES;
 }
-
 
 @end
