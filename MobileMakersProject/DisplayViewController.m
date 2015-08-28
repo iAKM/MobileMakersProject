@@ -141,7 +141,7 @@
     AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     self.moc = delegate.managedObjectContext;
 
-    [self getBeaconsWithString:@"EBEFD083-70A2-47C8-9837-E7B5634DF524"];
+    [self getBeaconsWithString:@"EBEFD083-70A2-47C8-9837-E7B5634DF525"];
 
     [self loadTags];
     [self loadPhotos];
@@ -253,13 +253,13 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-   DisplayTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
+    DisplayTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
     Tag *tag = [self.tags objectAtIndex:indexPath.row];
 
     NSData *data = tag.image;
     UIImage *image = [UIImage imageWithData:data];
     cell.imageView.image = image;
+    cell.nameLabel.text = tag.name;
 
 //BEACONS
     if (self.beacons.count > 0)
@@ -267,7 +267,6 @@
         if (self.bluetoothManager.state == CBCentralManagerStatePoweredOff)
         {
             cell.proxLabel.text = @"I said turn on the bluetooth x(";
-
         }
         else
         {
@@ -296,13 +295,11 @@
             cell.backgroundColor = [UIColor whiteColor];
             break;
         }
-        cell.nameLabel.text = tag.name;
 
     NSString *detailLabel = [NSString stringWithFormat:@"%@, Dist: %0.001f", proximityLabel, beacon.accuracy];
 
-
-   // NSString *detailLabel = [NSString stringWithFormat:@"Major: %d, Minor: %d, RSSI: %d, UUID: %@",beacon.major.intValue,
-                         //    beacon.minor.intValue, (int)beacon.rssi, beacon.proximityUUID.UUIDString];
+    // NSString *detailLabel = [NSString stringWithFormat:@"Major: %d, Minor: %d, RSSI: %d, UUID: %@",beacon.major.intValue,
+    //    beacon.minor.intValue, (int)beacon.rssi, beacon.proximityUUID.UUIDString];
 
     cell.proxLabel.text = detailLabel;
 
@@ -339,7 +336,6 @@
     cell.accessoryView.hidden = YES;
     self.mapView.showsUserLocation = NO;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
 }
 
 -(void)loadPhotos {
@@ -357,6 +353,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+
     if (editingStyle == UITableViewCellEditingStyleDelete) {
 
         [self.moc deleteObject:self.tags[indexPath.row]];

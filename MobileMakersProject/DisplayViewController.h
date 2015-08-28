@@ -16,9 +16,9 @@
 
 @property CLProximity lastProximity;
 
-
 -(void)loadPhotos;
--(void)getBeaconsWithString:(NSString *)uuid;
 
+-(void)getBeaconsWithString:(NSString *)uuid;
+-(void)getBeacons2WithString:(NSString *)uuid;
 
 @end
