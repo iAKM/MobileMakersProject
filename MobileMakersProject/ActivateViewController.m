@@ -10,6 +10,7 @@
 
 @interface ActivateViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *continueButton;
+@property (weak, nonatomic) IBOutlet UIButton *activateButton;
 
 @end
 
@@ -18,11 +19,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.continueButton.enabled = false;
+  self.continueButton.enabled = false;
 
 }
 
+- (IBAction)onActivateButtonPressed:(id)sender {
 
+    if (self.activateButton.enabled == NO)
+    {
+            self.continueButton.enabled = false;
+    }
+    else
+    {
+        self.continueButton.enabled = true;
+        [self.continueButton setTitleColor:[UIColor colorWithRed:232/255.0 green:208/255.0 blue:96/255.0 alpha:1] forState:normal];
+    }
 
+}
 
 @end
