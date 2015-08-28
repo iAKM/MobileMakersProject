@@ -5,6 +5,7 @@
 //  Created by Achyut Kumar Maddela on 20/08/15.
 //  Copyright (c) 2015 iAKM. All rights reserved.
 //
+#import <CommonCrypto/CommonDigest.h>
 
 #import "AddTagViewController.h"
 #import "MobileCoreServices/MobileCoreServices.h" //this will not auto complete.
@@ -119,10 +120,45 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
         UIImage *image = info[UIImagePickerControllerOriginalImage];
         self.imageView.image = image;
 
+//        NSString *fileName = [NSString stringWithFormat:@"%@.png", [self sha1]];
+//
+//        [self saveImageFile:image withName:fileName];
+
         if (self.newMedia)
             UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:finishedSavingWithError:contextInfo:), nil);
+
     }
 }
+
+//- (NSString*)sha1
+//{
+//    NSString *input = [[NSDate new] description];
+//
+//    const char *cstr = [input cStringUsingEncoding:NSUTF8StringEncoding];
+//    NSData *data = [NSData dataWithBytes:cstr length:input.length];
+//
+//    uint8_t digest[CC_SHA1_DIGEST_LENGTH];
+//
+//    CC_SHA1(data.bytes, (int)data.length, digest);
+//
+//    NSMutableString* output = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
+//
+//    for(int i = 0; i < CC_SHA1_DIGEST_LENGTH; i++)
+//        [output appendFormat:@"%02x", digest[i]];
+//    
+//    return output;
+//}
+//
+//-(void)saveImageFile:(UIImage *)image withName:(NSString *)name
+//{
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *documentsDirectory = [paths objectAtIndex:0];
+//    NSLog(@"directory -- %@", documentsDirectory);
+//    
+//    NSString *savedImagePath = [documentsDirectory stringByAppendingPathComponent:name];
+//    NSData *imageData = UIImagePNGRepresentation(image);
+//    [imageData writeToFile:savedImagePath atomically:NO];
+//}
 
 -(void)image:(UIImage *)image finishedSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 

@@ -28,6 +28,10 @@
 @property CLBeaconRegion *beaconRegion;
 @property MKPointAnnotation *mmAnnot;
 @property CBCentralManager *bluetoothManager;
+@property NSMutableArray *uuids;
+@property CLGeocoder *geocoder;
+@property CLPlacemark *placemark;
+
 
 @end
 
@@ -52,8 +56,11 @@
 
 
     self.mapView.showsUserLocation = YES;
+    [self getCurrentLocation];
 
-    [self captureLocation];
+
+    //[self captureLocation];
+
 
 }
 
@@ -62,7 +69,9 @@
     AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     self.moc = delegate.managedObjectContext;
 
-    [self getBeaconsWithString:@"EBEFD083-70A2-47C8-9837-E7B5634DF524"];
+
+    [self getBeaconsWithString:@"EBEFD083-70A2-47C8-9837-E7B5634DF525"];
+
 
     [self loadTags];
     [self loadPhotos];
@@ -93,6 +102,10 @@
     [self.locationManager startMonitoringForRegion:beaconRegion];
     [self.locationManager startRangingBeaconsInRegion:beaconRegion];
     [self.locationManager startUpdatingLocation];
+    beaconRegion.notifyEntryStateOnDisplay = NO;
+    beaconRegion.notifyOnExit = YES;
+    beaconRegion.notifyOnEntry = YES;
+
     
 }
 
@@ -100,7 +113,7 @@
 {
     self.locationManager.delegate = self;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-
+    self.locationManager.distanceFilter = kCLDistanceFilterNone;
     [self.locationManager startUpdatingLocation];
 
 }
@@ -145,7 +158,7 @@
 
 -(void)locationManager:(CLLocationManager *)manager didStartMonitoringForRegion:(CLRegion *)region
 {
-
+    NSLog(@"region is --------- - - - - - - %@", region.identifier);
 }
 
 -(void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region
@@ -154,6 +167,10 @@
     NSString *message = @"";
     self.beacons = beacons;
     [self.tableView reloadData];
+
+    NSLog(@"Beaconssss %@", beacons);
+    NSLog(@"Bea - %@", self.beacons);
+
 
     if(beacons.count > 0)
     {
@@ -192,28 +209,28 @@
 
 }
 
--(void)captureLocation
-{
-    [self.locationManager startUpdatingLocation];
-
-    NSArray *locations;
-
-    [self locationManager:self.locationManager didUpdateLocations:locations];
-
-    CLLocation *location = [locations lastObject];
-
-    NSLog(@"locavfdvtion --- %@", location);
-
-
-
-    self.mmAnnot.coordinate = CLLocationCoordinate2DMake( location.coordinate.latitude, location.coordinate.longitude);
-
-    [self.locationManager stopUpdatingLocation];
-
-    NSLog(@"cooooo %f", self.mmAnnot.coordinate.longitude);
-
-
-}
+//-(void)captureLocation
+//{
+//    [self.locationManager startUpdatingLocation];
+//
+//    NSArray *locations;
+//
+//    [self locationManager:self.locationManager didUpdateLocations:locations];
+//
+//    CLLocation *location = [locations lastObject];
+//
+//    NSLog(@"locavfdvtion --- %@", location);
+//
+//
+//
+//    self.mmAnnot.coordinate = CLLocationCoordinate2DMake( location.coordinate.latitude, location.coordinate.longitude);
+//
+//    [self.locationManager stopUpdatingLocation];
+//
+//    NSLog(@"cooooo %f", self.mmAnnot.coordinate.longitude);
+//
+//
+//}
 
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central {
     if(central.state == CBCentralManagerStatePoweredOff) {
@@ -230,13 +247,43 @@
     }
 }
 
+-(void)geoCodeLoction
+{
+    CLGeocoder *geo = [[CLGeocoder alloc] init];
+    CLLocation *loc = [[CLLocation alloc]initWithLatitude:self.mapView.userLocation.coordinate.latitude longitude:self.mapView.userLocation.coordinate.longitude];
+
+    [geo reverseGeocodeLocation:loc completionHandler:^(NSArray *placemarks, NSError *error) {
+        CLPlacemark *placemark = [placemarks objectAtIndex:0];
+
+        NSLog(@"Placemark ---- %@", placemark);
+
+        NSString *locatedAt = [[placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@", "];
+
+
+        NSLog(@"placemark -- %@", placemark.region);
+        NSLog(@"placemark -- %@", placemark.country);
+        NSLog(@"placemark -- %@", placemark.locality);
+        NSLog(@"location -- %@", placemark.name);
+        NSLog(@"location -- %@", placemark.postalCode);
+        NSLog(@"location -- %@", placemark.subLocality);
+
+        NSLog(@"location >>>> %@", placemark.location);
+
+        NSLog(@"I am currently at %@:", locatedAt);
+
+
+
+    }];
+
+}
+
 
 #pragma mark UITableView Datasource & Delegate Methods
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.tags.count;
-    return self.beacons.count;
+   // return self.beacons.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -304,6 +351,9 @@
 {
     self.mapView.showsUserLocation = YES;
 
+    [self geoCodeLoction];
+    
+
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 800, 800);
     [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
 
@@ -369,5 +419,15 @@
     self.tags = (NSMutableArray *)[self.moc executeFetchRequest:request error:nil];
     [self.tableView reloadData];
 }
+
+
+
+
+
+
+
+
+
+
 
 @end
