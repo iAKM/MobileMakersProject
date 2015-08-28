@@ -476,14 +476,13 @@
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
                                 <state key="normal" title="Continue">
-                                    <color key="titleColor" red="0.90980392160000001" green="0.81568627449999997" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="1" green="0.41960784309999999" blue="0.41176470590000003" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="16" y="502" width="368" height="41"/>
                                 </variation>
                                 <connections>
-                                    <action selector="continueButtonActivated:" destination="FHg-YI-iUc" eventType="touchUpInside" id="xtX-3W-Hac"/>
                                     <segue destination="6bd-Aw-LwH" kind="show" id="kxA-Ex-0pu"/>
                                 </connections>
                             </button>
@@ -533,6 +532,9 @@
                                 <variation key="widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="160" y="358" width="80" height="50"/>
                                 </variation>
+                                <connections>
+                                    <action selector="onActivateButtonPressed:" destination="FHg-YI-iUc" eventType="touchUpInside" id="4Qy-oX-2Yc"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.37647058820000001" green="0.40000000000000002" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -558,7 +560,8 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="continueButton" destination="AiL-hj-r9l" id="GmO-DN-RjH"/>
+                        <outlet property="activateButton" destination="sz3-Es-fAh" id="KNy-9U-KfK"/>
+                        <outlet property="continueButton" destination="AiL-hj-r9l" id="YC3-2w-ZRK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IGn-Me-Dsc" userLabel="First Responder" sceneMemberID="firstResponder"/>
