@@ -22,6 +22,8 @@
 		26753DB01B8685C000E438F8 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26753DAF1B8685C000E438F8 /* CoreLocation.framework */; };
 		26EAA68A1B90D19000446A50 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 26EAA6891B90D19000446A50 /* Tag.m */; };
 		DC2B5CA61B90BFF4004028D4 /* ActivateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2B5CA51B90BFF4004028D4 /* ActivateViewController.m */; };
+		DC2B5CA81B936C63004028D4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC2B5CA71B936C63004028D4 /* AudioToolbox.framework */; };
+		DC2B5CAA1B936CB3004028D4 /* libJaaleeBeaconSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC2B5CA91B936CB3004028D4 /* libJaaleeBeaconSDK.a */; };
 		DC72A8421B8978D90011122B /* DisplayTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC72A8411B8978D90011122B /* DisplayTableViewCell.m */; };
 		DC8F84261B8C15A300C56466 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC8F84251B8C15A300C56466 /* QuartzCore.framework */; };
 		DC8F84281B8C22FB00C56466 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC8F84271B8C22FB00C56466 /* MapKit.framework */; };
@@ -64,6 +66,8 @@
 		26EAA6891B90D19000446A50 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
 		DC2B5CA41B90BFF4004028D4 /* ActivateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivateViewController.h; sourceTree = "<group>"; };
 		DC2B5CA51B90BFF4004028D4 /* ActivateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivateViewController.m; sourceTree = "<group>"; };
+		DC2B5CA71B936C63004028D4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		DC2B5CA91B936CB3004028D4 /* libJaaleeBeaconSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libJaaleeBeaconSDK.a; path = "../Downloads/Jaalee-Beacon-iOS-SDK-master-master/SDK/libJaaleeBeaconSDK.a"; sourceTree = "<group>"; };
 		DC72A8401B8978D90011122B /* DisplayTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayTableViewCell.h; sourceTree = "<group>"; };
 		DC72A8411B8978D90011122B /* DisplayTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayTableViewCell.m; sourceTree = "<group>"; };
 		DC8F84251B8C15A300C56466 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -75,6 +79,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC2B5CA81B936C63004028D4 /* AudioToolbox.framework in Frameworks */,
+				DC2B5CAA1B936CB3004028D4 /* libJaaleeBeaconSDK.a in Frameworks */,
 				DC8F84281B8C22FB00C56466 /* MapKit.framework in Frameworks */,
 				DC8F84261B8C15A300C56466 /* QuartzCore.framework in Frameworks */,
 				26753DB01B8685C000E438F8 /* CoreLocation.framework in Frameworks */,
@@ -95,10 +101,17 @@
 		26341C6F1B827E01002798A2 = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				26EAA6881B90D19000446A50 /* Tag.h */,
 				26EAA6891B90D19000446A50 /* Tag.m */,
+=======
+				DC2B5CA91B936CB3004028D4 /* libJaaleeBeaconSDK.a */,
+				2651FFDB1B8CD159002578F5 /* Tag.h */,
+				2651FFDC1B8CD159002578F5 /* Tag.m */,
+>>>>>>> e362e6b54d417bd022d7fcb0fc596e5126bd214d
 				2651FFD21B8B6785002578F5 /* BeaconHelper.h */,
 				2651FFD31B8B6797002578F5 /* BeaconHelper.m */,
+				DC2B5CA71B936C63004028D4 /* AudioToolbox.framework */,
 				DC8F84271B8C22FB00C56466 /* MapKit.framework */,
 				DC8F84251B8C15A300C56466 /* QuartzCore.framework */,
 				26753DAF1B8685C000E438F8 /* CoreLocation.framework */,
@@ -417,6 +430,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Achyut Kumar Maddela (3652YXPTYY)";
 				INFOPLIST_FILE = MobileMakersProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/Stephen/Downloads/Jaalee-Beacon-iOS-SDK-master-master/SDK",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "a9a634d7-355e-4fa9-8427-f5bdddcec917";
 			};
@@ -430,6 +447,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Achyut Kumar Maddela (3652YXPTYY)";
 				INFOPLIST_FILE = MobileMakersProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/Stephen/Downloads/Jaalee-Beacon-iOS-SDK-master-master/SDK",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "a9a634d7-355e-4fa9-8427-f5bdddcec917";
 			};
