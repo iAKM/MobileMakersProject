@@ -20,7 +20,6 @@
 @interface DisplayViewController ()<UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, UIApplicationDelegate, CBCentralManagerDelegate, MKMapViewDelegate>
 
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
-@property (strong, nonatomic) IBOutlet UILabel *locLabel;
 @property (strong, nonatomic) CLLocation *location;
 @property NSArray *array;
 @property NSManagedObjectContext *moc;
@@ -32,12 +31,7 @@
 @property NSMutableArray *uuids;
 @property CLGeocoder *geocoder;
 @property CLPlacemark *placemark;
-@property (strong, nonatomic) IBOutlet UIImageView *arrow;
-@property (strong, nonatomic) IBOutlet UILabel *addLabel;
 
-
-@property BOOL isUpdated;
-@property BOOL isHidden;
 
 @end
 
@@ -49,7 +43,7 @@
     NSLog(@"self.beacons -- %@", self.beacons);
 
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-   self.locationManager = delegate.locationManager;
+    self.locationManager = delegate.locationManager;
     self.moc = delegate.managedObjectContext;
 
     [[self navigationController] setNavigationBarHidden:YES animated:YES]; // this hides the navigation bar.
@@ -61,36 +55,26 @@
     self.mmAnnot = [MKPointAnnotation new];
 
 
-
     self.mapView.showsUserLocation = YES;
     [self getCurrentLocation];
-    [self getBeacons];
 
-    if (self.beacons == 0) {
 
-        self.tableView.hidden = true;
-        self.mapView.hidden = true;
-        self.arrow.hidden = false;
-        self.addLabel.hidden = false;
-        self.addLabel.text = @"Please Add a Tag to Begin";
-    }
+    //[self captureLocation];
+
 
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
-
-    if (self.beacons == 0) {
-
-        self.tableView.hidden = true;
-        self.mapView.hidden = true;
-        self.arrow.hidden = false;
-        
-    }
-
     AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     self.moc = delegate.managedObjectContext;
 
+
+    [self getBeaconsWithString:@"EBEFD083-70A2-47C8-9837-E7B5634DF525"];
+
+
+    [self loadTags];
+    [self loadPhotos];
 
     [[self navigationController] setNavigationBarHidden:YES animated:YES]; // this hides the navigation bar.
 
@@ -103,21 +87,11 @@
 }
 
 
--(void)getBeacons
+-(void)getBeaconsWithString:(NSString *)uuid
 {
-   NSUUID *beaconUUID = [[NSUUID alloc] initWithUUIDString:@"EBEFD083-70A2-47C8-9837-E7B5634DF525"];
-
-    
-    NSString *regionIdentifier = @"ibeaconModuleUS";
-
-
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Tag"];
-    self.tags = (NSMutableArray *) [self.moc executeFetchRequest:request error:nil];
-
-    CLBeaconRegion *beaconRegion = [[CLBeaconRegion alloc]initWithProximityUUID:beaconUUID
-                identifier:regionIdentifier];
-
-
+    NSUUID *beaconUUID = [[NSUUID alloc] initWithUUIDString:uuid];
+    NSString *regionIdentifier = @"us.iBeaconModules";
+    CLBeaconRegion *beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:beaconUUID identifier:regionIdentifier];
 
     self.locationManager = [[CLLocationManager alloc] init];
     if([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
@@ -125,16 +99,14 @@
     }
     self.locationManager.delegate = self;
     self.locationManager.pausesLocationUpdatesAutomatically = NO;
-
     [self.locationManager startMonitoringForRegion:beaconRegion];
     [self.locationManager startRangingBeaconsInRegion:beaconRegion];
-
-
     [self.locationManager startUpdatingLocation];
     beaconRegion.notifyEntryStateOnDisplay = NO;
     beaconRegion.notifyOnExit = YES;
     beaconRegion.notifyOnEntry = YES;
 
+    
 }
 
 -(void)getCurrentLocation
@@ -153,11 +125,15 @@
         return nil;
     }
 
+
     MKPinAnnotationView *pin = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:nil];
+
+    [self getBeaconsWithString:@"EBEFD083-70A2-47C8-9837-E7B5634DF525"];
+
 
     if ([annotation isEqual:self.mmAnnot])
     {
-        pin.image = [UIImage imageNamed:@"bikeImage"];
+        pin.image = [UIImage imageNamed:@"pinDog"];
 
     }
 
@@ -170,22 +146,18 @@
 
 -(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-    if(!self.isUpdated) {
-        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 15000, 15000);
-        [self.mapView setRegion:[self.mapView regionThatFits:region] animated:NO];
-        
-        self.isUpdated = true;
-    }
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 15000, 15000);
+    [self.mapView setRegion:[self.mapView regionThatFits:region] animated:NO];
 }
 
 #pragma mark CLLoc Delegate Methods
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-   // CLLocation *location = [locations lastObject];
-   // NSLog(@"location - %f", location.coordinate.latitude);
+    CLLocation *location = [locations lastObject];
+    NSLog(@"location - %f", location.coordinate.latitude);
 
-   // NSLog(@"locations.count == %li", locations.count);
+    NSLog(@"locations.count == %li", locations.count);
 }
 
 -(void)locationManager:(CLLocationManager *)manager didStartMonitoringForRegion:(CLRegion *)region
@@ -196,57 +168,73 @@
 -(void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region
 {
 
-    NSMutableArray *filteredBeacons = [NSMutableArray new];
+    NSString *message = @"";
+    self.beacons = beacons;
+    [self.tableView reloadData];
 
-    for (CLBeacon *beacon in beacons)
+    NSLog(@"Beaconssss %@", beacons);
+    NSLog(@"Bea - %@", self.beacons);
+
+
+    if(beacons.count > 0)
     {
-        for (Tag *tag in self.tags)
+        CLBeacon *nearestBeacon = beacons.firstObject;
+        if(nearestBeacon.proximity == self.lastProximity || nearestBeacon.proximity == CLProximityUnknown)
         {
-            if ([beacon.minor isEqualToNumber:tag.minor])
-            {
-                NSInteger tagPosition = [self.tags indexOfObject:tag];
-                NSLog(@"position of beacon -is ------ >>>> %ld", (long)tagPosition);
 
-                [filteredBeacons addObject:beacon];
+            return;
+        }
+        self.lastProximity = nearestBeacon.proximity;
 
-            }
+        switch(nearestBeacon.proximity) {
+            case CLProximityFar:
+                message = @"You are far away from the beacon";
+
+                break;
+            case CLProximityNear:
+                message = @"You are near the beacon";
+                break;
+            case CLProximityImmediate:
+                message = @"You are in the immediate proximity of the beacon";
+
+                break;
+            case CLProximityUnknown:
+                break; //check
+            default: message = @"No beacons are nearby";
         }
     }
 
-    self.beacons = filteredBeacons;
-    
-    
-    [self.tableView reloadData];
-    
-
-}
-
--(void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
-{
-    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-
-    [delegate sendLocalNotificationWithMessage:@"You entered the region"];
+    NSLog(@"%@", message);
 }
 
 -(void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
     [manager stopRangingBeaconsInRegion:(CLBeaconRegion*)region];
-
-
-    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-
-    [delegate sendLocalNotificationWithMessage:@"You exited the region"];
-
-
-
-
-    
-
-//    Tag *tag = self.tags.firstObject;
-//    tag.lastSeenLat = [NSNumber numberWithDouble:self.mapView.userLocation.coordinate.latitude];
-//    tag.lastSeenLon = [NSNumber numberWithDouble:self.mapView.userLocation.coordinate.latitude];
-//    [self.locationManager stopUpdatingLocation];
+    [self.locationManager stopUpdatingLocation];
 
 }
+
+//-(void)captureLocation
+//{
+//    [self.locationManager startUpdatingLocation];
+//
+//    NSArray *locations;
+//
+//    [self locationManager:self.locationManager didUpdateLocations:locations];
+//
+//    CLLocation *location = [locations lastObject];
+//
+//    NSLog(@"locavfdvtion --- %@", location);
+//
+//
+//
+//    self.mmAnnot.coordinate = CLLocationCoordinate2DMake( location.coordinate.latitude, location.coordinate.longitude);
+//
+//    [self.locationManager stopUpdatingLocation];
+//
+//    NSLog(@"cooooo %f", self.mmAnnot.coordinate.longitude);
+//
+//
+//}
 
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central {
     if(central.state == CBCentralManagerStatePoweredOff) {
@@ -268,12 +256,6 @@
     CLGeocoder *geo = [[CLGeocoder alloc] init];
     CLLocation *loc = [[CLLocation alloc]initWithLatitude:self.mapView.userLocation.coordinate.latitude longitude:self.mapView.userLocation.coordinate.longitude];
 
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 800, 800);
-    [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
-
-
-
-
     [geo reverseGeocodeLocation:loc completionHandler:^(NSArray *placemarks, NSError *error) {
         CLPlacemark *placemark = [placemarks objectAtIndex:0];
 
@@ -291,12 +273,10 @@
 
         NSLog(@"location >>>> %@", placemark.location);
 
-        NSLog(@"You are at: %@:", locatedAt);
+        NSLog(@"I am currently at %@:", locatedAt);
 
 
-       // NSString *loc = [NSString stringWithFormat:@"You are at: %@, %@, %@", placemark.subLocality, placemark.locality, placemark.country];
 
-        self.locLabel.text = locatedAt;
     }];
 
 }
@@ -304,64 +284,39 @@
 
 #pragma mark UITableView Datasource & Delegate Methods
 
-//- (Tag *)getTagForBeacon:(CLBeacon *)beacon {
-//    for(Tag *t in self.tags) {
-//        if ([t.minor isEqualToNumber:beacon.minor]) {
-//            return t;
-//        }
-//    }
-//
-//    return nil;
-//}
-
-- (CLBeacon *)getBeaconForTag:(Tag *)tag {
-    for(CLBeacon *b in self.beacons) {
-        if([b.minor isEqualToNumber:tag.minor]) {
-            return b;
-        }
-    }
-
-    return nil;
-}
-
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.tags.count;
+   // return self.beacons.count;
 }
-
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
     DisplayTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
-
     Tag *tag = [self.tags objectAtIndex:indexPath.row];
-    CLBeacon *beacon = [self getBeaconForTag:tag];
 
-//    if (beacon != nil) {
+    NSData *data = tag.image;
+    UIImage *image = [UIImage imageWithData:data];
+    cell.imageView.image = image;
+    cell.nameLabel.text = tag.name;
 
-        NSData *data = tag.image;
-        UIImage *image = [UIImage imageWithData:data];
-        cell.imageView.image = image;
+//BEACONS
+    if (self.beacons.count > 0)
+    {
+        if (self.bluetoothManager.state == CBCentralManagerStatePoweredOff)
+        {
+            cell.proxLabel.text = @"I said turn on the bluetooth x(";
+        }
+        else
+        {
 
-    //}
-
-    self.arrow.hidden = true;
-    self.addLabel.hidden = true;
-
+    CLBeacon *beacon = [self.beacons objectAtIndex:indexPath.row];
     NSString *proximityLabel = @"";
-    switch (beacon.proximity) {
+    switch (beacon.proximity)
+        {
         case CLProximityFar:
             proximityLabel = [NSString stringWithFormat:@"Your %@ is Far", tag.name];
             cell.backgroundColor = [UIColor colorWithRed:(255/255.0) green:(107/255.0) blue:(105/255.0) alpha:1];
-            
-            self.mmAnnot.coordinate = CLLocationCoordinate2DMake(self.mapView.userLocation.coordinate.latitude, self.mapView.userLocation.coordinate.longitude);
-
-            self.mmAnnot.title = @"Last Seen Location";
-
-            [self.mapView addAnnotation:self.mmAnnot];
-            
-
             break;
 
         case CLProximityNear:
@@ -379,14 +334,16 @@
             cell.backgroundColor = [UIColor whiteColor];
             break;
         }
-        cell.nameLabel.text = tag.name;
 
     NSString *detailLabel = [NSString stringWithFormat:@"%@, Dist: %0.001f", proximityLabel, beacon.accuracy];
 
+    // NSString *detailLabel = [NSString stringWithFormat:@"Major: %d, Minor: %d, RSSI: %d, UUID: %@",beacon.major.intValue,
+    //    beacon.minor.intValue, (int)beacon.rssi, beacon.proximityUUID.UUIDString];
+
     cell.proxLabel.text = detailLabel;
 
-    self.tableView.hidden = false;
-    self.mapView.hidden = false;
+    }
+    }
 
     return cell;
 }
@@ -396,6 +353,7 @@
     self.mapView.showsUserLocation = YES;
 
     [self geoCodeLoction];
+    
 
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 800, 800);
     [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
@@ -417,11 +375,9 @@
 -(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    self.locLabel.hidden = true;
     cell.accessoryView.hidden = YES;
     self.mapView.showsUserLocation = NO;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
 }
 
 
@@ -430,6 +386,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+
     if (editingStyle == UITableViewCellEditingStyleDelete) {
 
         [self.moc deleteObject:self.tags[indexPath.row]];
@@ -441,15 +398,6 @@
         self.tags = [tmp copy];
 
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-
-
-            self.tableView.hidden = true;
-            self.mapView.hidden = true;
-            self.arrow.hidden = false;
-            self.addLabel.hidden = false;
-            self.addLabel.text = @"Add a Tag to Begin";
-
-
         [self.tableView endUpdates];
 
         [self.moc save:nil];
@@ -470,10 +418,17 @@
 {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Tag"];
     self.tags = (NSMutableArray *)[self.moc executeFetchRequest:request error:nil];
-    NSLog(@"self.tags --------- --------- %@", self.tags);
-    
-//    [self.tableView reloadData];
+    [self.tableView reloadData];
 }
+
+
+
+
+
+
+
+
+
 
 
 @end
