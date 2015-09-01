@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "AddTagViewController.h"
 
 @interface DisplayViewController : UIViewController <CLLocationManagerDelegate>
 
@@ -16,8 +17,11 @@
 
 @property CLProximity lastProximity;
 
+@property NSString *minor;
+
+
 -(void)loadPhotos;
 
--(void)getBeaconsWithString:(NSString *)uuid;
+//-(void)getBeaconsWithString:(NSString *)uuid;
 
 @end

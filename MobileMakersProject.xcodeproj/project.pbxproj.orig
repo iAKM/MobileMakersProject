@@ -15,15 +15,12 @@
 		26341C8C1B827E03002798A2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 26341C8B1B827E03002798A2 /* Images.xcassets */; };
 		26341C8F1B827E03002798A2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26341C8D1B827E03002798A2 /* LaunchScreen.xib */; };
 		26341C9B1B827E04002798A2 /* MobileMakersProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 26341C9A1B827E04002798A2 /* MobileMakersProjectTests.m */; };
-<<<<<<< HEAD
 		DC72A83C1B866EF10011122B /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC72A83B1B866EF10011122B /* CoreBluetooth.framework */; };
-=======
 		26753DA61B86646500E438F8 /* DisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26753DA51B86646500E438F8 /* DisplayViewController.m */; };
 		26753DA91B8664A700E438F8 /* AddTagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26753DA81B8664A700E438F8 /* AddTagViewController.m */; };
 		26753DAE1B8685B800E438F8 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26753DAD1B8685B800E438F8 /* CoreBluetooth.framework */; };
 		26753DB01B8685C000E438F8 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26753DAF1B8685C000E438F8 /* CoreLocation.framework */; };
 		26753DB31B8687A400E438F8 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 26753DB21B8687A400E438F8 /* Tag.m */; };
->>>>>>> d6963e388f08d775c98aab8e555ccc7b572fda4e
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,9 +48,7 @@
 		26341C941B827E03002798A2 /* MobileMakersProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MobileMakersProjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		26341C991B827E04002798A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		26341C9A1B827E04002798A2 /* MobileMakersProjectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MobileMakersProjectTests.m; sourceTree = "<group>"; };
-<<<<<<< HEAD
 		DC72A83B1B866EF10011122B /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
-=======
 		26753DA41B86646500E438F8 /* DisplayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayViewController.h; sourceTree = "<group>"; };
 		26753DA51B86646500E438F8 /* DisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayViewController.m; sourceTree = "<group>"; };
 		26753DA71B8664A700E438F8 /* AddTagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTagViewController.h; sourceTree = "<group>"; };
@@ -62,7 +57,6 @@
 		26753DAF1B8685C000E438F8 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		26753DB11B8687A400E438F8 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
 		26753DB21B8687A400E438F8 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
->>>>>>> d6963e388f08d775c98aab8e555ccc7b572fda4e
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,12 +64,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-<<<<<<< HEAD
 				DC72A83C1B866EF10011122B /* CoreBluetooth.framework in Frameworks */,
-=======
 				26753DB01B8685C000E438F8 /* CoreLocation.framework in Frameworks */,
 				26753DAE1B8685B800E438F8 /* CoreBluetooth.framework in Frameworks */,
->>>>>>> d6963e388f08d775c98aab8e555ccc7b572fda4e
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,14 +83,11 @@
 		26341C6F1B827E01002798A2 = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
-				DC72A83B1B866EF10011122B /* CoreBluetooth.framework */,
-=======
+
 				26753DB11B8687A400E438F8 /* Tag.h */,
 				26753DB21B8687A400E438F8 /* Tag.m */,
 				26753DAF1B8685C000E438F8 /* CoreLocation.framework */,
 				26753DAD1B8685B800E438F8 /* CoreBluetooth.framework */,
->>>>>>> d6963e388f08d775c98aab8e555ccc7b572fda4e
 				26341C7A1B827E01002798A2 /* MobileMakersProject */,
 				26341C971B827E04002798A2 /* MobileMakersProjectTests */,
 				26341C791B827E01002798A2 /* Products */,

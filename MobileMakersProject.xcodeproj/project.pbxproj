@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		260C8BCB1B950DFF004759D1 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 260C8BCA1B950DFF004759D1 /* Tag.m */; };
+		260C8BD11B95115B004759D1 /* BeaconsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 260C8BD01B95115B004759D1 /* BeaconsViewController.m */; };
 		26341C7E1B827E02002798A2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 26341C7D1B827E02002798A2 /* main.m */; };
 		26341C811B827E03002798A2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 26341C801B827E03002798A2 /* AppDelegate.m */; };
 		26341C841B827E03002798A2 /* MobileMakersProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 26341C821B827E03002798A2 /* MobileMakersProject.xcdatamodeld */; };
@@ -20,10 +22,8 @@
 		26753DA91B8664A700E438F8 /* AddTagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26753DA81B8664A700E438F8 /* AddTagViewController.m */; };
 		26753DAE1B8685B800E438F8 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26753DAD1B8685B800E438F8 /* CoreBluetooth.framework */; };
 		26753DB01B8685C000E438F8 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26753DAF1B8685C000E438F8 /* CoreLocation.framework */; };
-		26EAA68A1B90D19000446A50 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 26EAA6891B90D19000446A50 /* Tag.m */; };
 		DC2B5CA61B90BFF4004028D4 /* ActivateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2B5CA51B90BFF4004028D4 /* ActivateViewController.m */; };
 		DC2B5CA81B936C63004028D4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC2B5CA71B936C63004028D4 /* AudioToolbox.framework */; };
-		DC2B5CAA1B936CB3004028D4 /* libJaaleeBeaconSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC2B5CA91B936CB3004028D4 /* libJaaleeBeaconSDK.a */; };
 		DC72A8421B8978D90011122B /* DisplayTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC72A8411B8978D90011122B /* DisplayTableViewCell.m */; };
 		DC8F84261B8C15A300C56466 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC8F84251B8C15A300C56466 /* QuartzCore.framework */; };
 		DC8F84281B8C22FB00C56466 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC8F84271B8C22FB00C56466 /* MapKit.framework */; };
@@ -40,6 +40,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		260C8BC91B950DFF004759D1 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
+		260C8BCA1B950DFF004759D1 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
+		260C8BCF1B95115B004759D1 /* BeaconsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconsViewController.h; sourceTree = "<group>"; };
+		260C8BD01B95115B004759D1 /* BeaconsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconsViewController.m; sourceTree = "<group>"; };
 		26341C781B827E01002798A2 /* MobileMakersProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MobileMakersProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26341C7C1B827E02002798A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		26341C7D1B827E02002798A2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -62,12 +66,9 @@
 		26753DA81B8664A700E438F8 /* AddTagViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTagViewController.m; sourceTree = "<group>"; };
 		26753DAD1B8685B800E438F8 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		26753DAF1B8685C000E438F8 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		26EAA6881B90D19000446A50 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
-		26EAA6891B90D19000446A50 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
 		DC2B5CA41B90BFF4004028D4 /* ActivateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivateViewController.h; sourceTree = "<group>"; };
 		DC2B5CA51B90BFF4004028D4 /* ActivateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivateViewController.m; sourceTree = "<group>"; };
 		DC2B5CA71B936C63004028D4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		DC2B5CA91B936CB3004028D4 /* libJaaleeBeaconSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libJaaleeBeaconSDK.a; path = "../Downloads/Jaalee-Beacon-iOS-SDK-master-master/SDK/libJaaleeBeaconSDK.a"; sourceTree = "<group>"; };
 		DC72A8401B8978D90011122B /* DisplayTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayTableViewCell.h; sourceTree = "<group>"; };
 		DC72A8411B8978D90011122B /* DisplayTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayTableViewCell.m; sourceTree = "<group>"; };
 		DC8F84251B8C15A300C56466 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -80,7 +81,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC2B5CA81B936C63004028D4 /* AudioToolbox.framework in Frameworks */,
-				DC2B5CAA1B936CB3004028D4 /* libJaaleeBeaconSDK.a in Frameworks */,
 				DC8F84281B8C22FB00C56466 /* MapKit.framework in Frameworks */,
 				DC8F84261B8C15A300C56466 /* QuartzCore.framework in Frameworks */,
 				26753DB01B8685C000E438F8 /* CoreLocation.framework in Frameworks */,
@@ -101,14 +101,8 @@
 		26341C6F1B827E01002798A2 = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
-				26EAA6881B90D19000446A50 /* Tag.h */,
-				26EAA6891B90D19000446A50 /* Tag.m */,
-=======
-				DC2B5CA91B936CB3004028D4 /* libJaaleeBeaconSDK.a */,
-				2651FFDB1B8CD159002578F5 /* Tag.h */,
-				2651FFDC1B8CD159002578F5 /* Tag.m */,
->>>>>>> e362e6b54d417bd022d7fcb0fc596e5126bd214d
+				260C8BC91B950DFF004759D1 /* Tag.h */,
+				260C8BCA1B950DFF004759D1 /* Tag.m */,
 				2651FFD21B8B6785002578F5 /* BeaconHelper.h */,
 				2651FFD31B8B6797002578F5 /* BeaconHelper.m */,
 				DC2B5CA71B936C63004028D4 /* AudioToolbox.framework */,
@@ -137,6 +131,8 @@
 				26341C881B827E03002798A2 /* Main.storyboard */,
 				DC2B5CA41B90BFF4004028D4 /* ActivateViewController.h */,
 				DC2B5CA51B90BFF4004028D4 /* ActivateViewController.m */,
+				260C8BCF1B95115B004759D1 /* BeaconsViewController.h */,
+				260C8BD01B95115B004759D1 /* BeaconsViewController.m */,
 				26341C7F1B827E03002798A2 /* AppDelegate.h */,
 				26341C801B827E03002798A2 /* AppDelegate.m */,
 				26341C851B827E03002798A2 /* SetupViewController.h */,
@@ -291,10 +287,11 @@
 				26753DA61B86646500E438F8 /* DisplayViewController.m in Sources */,
 				2651FFD41B8B6797002578F5 /* BeaconHelper.m in Sources */,
 				26753DA91B8664A700E438F8 /* AddTagViewController.m in Sources */,
-				26EAA68A1B90D19000446A50 /* Tag.m in Sources */,
+				260C8BCB1B950DFF004759D1 /* Tag.m in Sources */,
 				26341C811B827E03002798A2 /* AppDelegate.m in Sources */,
 				26341C7E1B827E02002798A2 /* main.m in Sources */,
 				26341C871B827E03002798A2 /* SetupViewController.m in Sources */,
+				260C8BD11B95115B004759D1 /* BeaconsViewController.m in Sources */,
 				DC72A8421B8978D90011122B /* DisplayTableViewCell.m in Sources */,
 				26341C841B827E03002798A2 /* MobileMakersProject.xcdatamodeld in Sources */,
 			);

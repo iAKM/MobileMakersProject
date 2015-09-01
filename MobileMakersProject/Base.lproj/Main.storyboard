@@ -157,10 +157,66 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rrB-H4-wLw">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <items>
+                                    <navigationItem title="Fetch Request" id="EnA-yC-WIx">
+                                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="qdR-7h-eM0">
+                                            <connections>
+                                                <segue destination="4OK-9t-ePc" kind="show" id="yfe-tL-ywB"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="aOv-ie-OBv">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="64" width="400" height="227"/>
+                                </variation>
+                                <connections>
+                                    <outlet property="delegate" destination="6bd-Aw-LwH" id="Dez-c3-6iZ"/>
+                                </connections>
+                            </mapView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qj5-W3-m8c">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="16" y="295" width="375" height="21"/>
+                                </variation>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow" translatesAutoresizingMaskIntoConstraints="NO" id="5OX-qD-FEn">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="292" y="72" width="80" height="122"/>
+                                </variation>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0L-PG-ycy">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="30"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="23" y="186" width="361" height="21"/>
+                                </variation>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="130" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="VK8-7z-fKm">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="k7a-Kg-1jg">
+                                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" title="Go to beacosn">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <segue destination="HDA-B7-4w8" kind="show" id="fys-1o-xVd"/>
+                                    </connections>
+                                </button>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleAspectFit" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="1" reuseIdentifier="CellID" rowHeight="130" id="wZH-gM-yPO" customClass="DisplayTableViewCell">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -256,50 +312,13 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="0.0" y="324" width="400" height="301"/>
+                                    <rect key="frame" x="0.0" y="333" width="400" height="301"/>
                                 </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="6bd-Aw-LwH" id="V8S-52-YHe"/>
                                     <outlet property="delegate" destination="6bd-Aw-LwH" id="sXC-Vq-vje"/>
                                 </connections>
                             </tableView>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rrB-H4-wLw">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                <items>
-                                    <navigationItem title="Fetch Request" id="EnA-yC-WIx">
-                                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="qdR-7h-eM0">
-                                            <connections>
-                                                <segue destination="4OK-9t-ePc" kind="show" id="yfe-tL-ywB"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-<<<<<<< HEAD
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="0.0" y="20" width="400" height="44"/>
-                                </variation>
-=======
->>>>>>> e362e6b54d417bd022d7fcb0fc596e5126bd214d
-                            </navigationBar>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="aOv-ie-OBv">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="0.0" y="64" width="400" height="227"/>
-                                </variation>
-                                <connections>
-                                    <outlet property="delegate" destination="6bd-Aw-LwH" id="Dez-c3-6iZ"/>
-                                </connections>
-                            </mapView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qj5-W3-m8c">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="16" y="295" width="375" height="21"/>
-                                </variation>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.37647058820000001" green="0.40000000000000002" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -309,10 +328,12 @@
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
-                                <exclude reference="VK8-7z-fKm"/>
                                 <exclude reference="rrB-H4-wLw"/>
                                 <exclude reference="aOv-ie-OBv"/>
                                 <exclude reference="qj5-W3-m8c"/>
+                                <exclude reference="5OX-qD-FEn"/>
+                                <exclude reference="h0L-PG-ycy"/>
+                                <exclude reference="VK8-7z-fKm"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="7hk-gC-RjF"/>
@@ -322,10 +343,12 @@
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
-                                <include reference="VK8-7z-fKm"/>
                                 <include reference="rrB-H4-wLw"/>
                                 <include reference="aOv-ie-OBv"/>
                                 <include reference="qj5-W3-m8c"/>
+                                <include reference="5OX-qD-FEn"/>
+                                <include reference="h0L-PG-ycy"/>
+                                <include reference="VK8-7z-fKm"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="7hk-gC-RjF"/>
@@ -337,6 +360,8 @@
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="addLabel" destination="h0L-PG-ycy" id="cNs-mA-uiP"/>
+                        <outlet property="arrow" destination="5OX-qD-FEn" id="Nxu-LE-m4s"/>
                         <outlet property="locLabel" destination="qj5-W3-m8c" id="q4Z-vv-Hqe"/>
                         <outlet property="mapView" destination="aOv-ie-OBv" id="Hzh-IR-jji"/>
                         <outlet property="tableView" destination="VK8-7z-fKm" id="LUq-nI-5RZ"/>
@@ -345,6 +370,58 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gtS-wq-l8T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1917" y="-306"/>
+        </scene>
+        <!--Beacons View Controller-->
+        <scene sceneID="cdt-Ve-Gfp">
+            <objects>
+                <viewController id="HDA-B7-4w8" customClass="BeaconsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4KP-AV-2Ry"/>
+                        <viewControllerLayoutGuide type="bottom" id="ePL-gr-6sX"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ZlS-ii-Nu8">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="OiW-vw-uJx">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CellID" id="nfS-PT-zJj">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nfS-PT-zJj" id="Ruv-ZZ-5Xq">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="49" y="42" width="302" height="491"/>
+                                </variation>
+                                <connections>
+                                    <outlet property="dataSource" destination="HDA-B7-4w8" id="QEy-zc-5Ob"/>
+                                    <outlet property="delegate" destination="HDA-B7-4w8" id="DJV-EB-u95"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="OiW-vw-uJx"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="OiW-vw-uJx"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="OiW-vw-uJx" id="zMn-bf-c2Y"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e7E-2b-Hir" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2710.5" y="-556"/>
         </scene>
         <!--Add Tag View Controller-->
         <scene sceneID="NUz-dQ-KeW">
@@ -429,6 +506,31 @@
                                     <rect key="frame" x="64" y="28" width="272" height="38"/>
                                 </variation>
                             </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="minor" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2fG-PQ-51l">
+                                <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                    <rect key="frame" x="55" y="197" width="272" height="30"/>
+                                </variation>
+                                <connections>
+                                    <outlet property="delegate" destination="4OK-9t-ePc" id="SSK-9e-KVx"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O7X-Jb-SFe">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="16" y="86" width="46" height="30"/>
+                                </variation>
+                                <connections>
+                                    <segue destination="6bd-Aw-LwH" kind="show" id="4jA-u9-KXZ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.37647058820000001" green="0.40000000000000002" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
                         <variation key="default">
@@ -439,6 +541,8 @@
                                 <exclude reference="y31-z1-m6Z"/>
                                 <exclude reference="wFW-hJ-4Oj"/>
                                 <exclude reference="luk-sW-SX2"/>
+                                <exclude reference="2fG-PQ-51l"/>
+                                <exclude reference="O7X-Jb-SFe"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -449,6 +553,8 @@
                                 <include reference="y31-z1-m6Z"/>
                                 <include reference="wFW-hJ-4Oj"/>
                                 <include reference="luk-sW-SX2"/>
+                                <include reference="2fG-PQ-51l"/>
+                                <include reference="O7X-Jb-SFe"/>
                             </mask>
                         </variation>
                     </view>
@@ -456,6 +562,7 @@
                     <connections>
                         <outlet property="cameraImage" destination="wFW-hJ-4Oj" id="LFn-qd-aS0"/>
                         <outlet property="imageView" destination="wFW-hJ-4Oj" id="Gef-B5-FZZ"/>
+                        <outlet property="minorTxtFld" destination="2fG-PQ-51l" id="cE3-Tr-icq"/>
                         <outlet property="nameTxtFld" destination="L1K-EP-mAa" id="ogZ-bw-Wex"/>
                     </connections>
                 </viewController>
@@ -591,11 +698,12 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow" width="1000" height="1000"/>
         <image name="bluetooth" width="512" height="512"/>
         <image name="camera" width="500" height="500"/>
         <image name="traffic_light" width="76" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ynR-Tt-CNV"/>
+        <segue reference="4jA-u9-KXZ"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -2,7 +2,7 @@
 //  Tag.m
 //  MobileMakersProject
 //
-//  Created by Achyut Kumar Maddela on 28/08/15.
+//  Created by Achyut Kumar Maddela on 31/08/15.
 //  Copyright (c) 2015 iAKM. All rights reserved.
 //
 
@@ -12,11 +12,10 @@
 @implementation Tag
 
 @dynamic image;
-@dynamic major;
-@dynamic minor;
-@dynamic name;
-@dynamic uuid;
 @dynamic lastSeenLat;
 @dynamic lastSeenLon;
+@dynamic minor;
+@dynamic name;
+@dynamic proximity;
 
 @end

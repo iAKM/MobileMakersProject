@@ -13,11 +13,19 @@
 #import "Tag.h"
 #import "DisplayViewController.h"
 
-@interface AddTagViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface AddTagViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate, CLLocationManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *cameraImage;
 @property NSManagedObjectContext *moc;
 @property (nonatomic, copy) NSArray *photos;
+@property CLLocationManager *locationManager;
+@property NSMutableArray *beacons;
+@property NSMutableArray *tags;
+
+
+@property CLProximity lastProximity;
+
+
 
 @end
 
@@ -30,6 +38,7 @@
     self.photos = [NSArray new];
 
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    self.locationManager = delegate.locationManager;
     self.moc = delegate.managedObjectContext;
 
     [[self navigationController] setNavigationBarHidden:NO animated:YES]; //
@@ -39,6 +48,37 @@
 
     self.cameraImage.layer.borderWidth = 3.0f;
     self.cameraImage.layer.borderColor = [UIColor whiteColor].CGColor;
+
+
+    [self rangeBeacons];
+}
+
+- (void)rangeBeacons {
+    NSUUID *beaconUUID = [[NSUUID alloc] initWithUUIDString:@"EBEFD083-70A2-47C8-9837-E7B5634DF525"];
+    NSString *regionIdentifier = @"ibeaconModuleUS";
+
+
+
+    CLBeaconRegion *beaconRegion = [[CLBeaconRegion alloc]initWithProximityUUID:beaconUUID identifier:regionIdentifier];
+    NSLog(@"beacon reghionnn %@", beaconRegion.minor);
+
+
+
+    self.locationManager = [[CLLocationManager alloc] init];
+    if([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+        [self.locationManager requestAlwaysAuthorization];
+    }
+    self.locationManager.delegate = self;
+    self.locationManager.pausesLocationUpdatesAutomatically = NO;
+    [self.locationManager startMonitoringForRegion:beaconRegion];
+    [self.locationManager startRangingBeaconsInRegion:beaconRegion];
+
+
+    [self.locationManager startUpdatingLocation];
+    beaconRegion.notifyEntryStateOnDisplay = NO;
+    beaconRegion.notifyOnExit = YES;
+    beaconRegion.notifyOnEntry = YES;
+
 }
 
 - (IBAction)onContinueButtonPressed:(UIButton *)sender {
@@ -46,32 +86,117 @@
     UIImage *image = self.imageView.image; //image
     NSData *imageData = UIImagePNGRepresentation(image); //image
 
-    NSLog(@"inserting data");
+  //  NSLog(@"inserting data");
 
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     self.moc = delegate.managedObjectContext;
 
+
+
     NSManagedObject *newObject = [NSEntityDescription insertNewObjectForEntityForName:@"Tag" inManagedObjectContext:self.moc];
     
     [newObject setValue:self.nameTxtFld.text forKey:@"name"];
-    [newObject setValue:[NSNumber numberWithInteger:[self.majorTxtFld.text integerValue]] forKey:@"major"];
-    [newObject setValue:[NSNumber numberWithInteger:[self.minorTxtFld.text integerValue]] forKey:@"minor"];
-   // [newObject setValue:self.uuidTxtFld.text forKey:@"uuid"];
+    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+    [newObject setValue:[f numberFromString:self.minorTxtFld.text] forKey:@"minor"];
     [newObject setValue:imageData forKey:@"image"];
 
     [self.moc save:nil];
 
-   // DisplayViewController *dvc = [DisplayViewController new];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Tag"];
+    self.tags = [[self.moc executeFetchRequest:request error:nil] mutableCopy];
+    NSLog(@"self.tags is %@", newObject);
 
-  //  [dvc getBeaconsWithString:self.uuidTxtFld.text];
+
 }
+
+#pragma mark Loc Delegate Methods
+
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    // CLLocation *location = [locations lastObject];
+    // NSLog(@"location - %f", location.coordinate.latitude);
+
+    // NSLog(@"locations.count == %li", locations.count);
+
+}
+
+-(void)locationManager:(CLLocationManager *)manager didStartMonitoringForRegion:(CLRegion *)region
+{
+    NSLog(@"region is --------- - - - - - - %@", region.identifier);
+}
+
+-(void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region
+{
+
+  //  NSString *message = @"";
+    self.beacons = [beacons mutableCopy];
+
+//    [self.tableView reloadData];
+
+//    NSLog(@"Beaconssss %@", beacons);
+
+
+//    if(beacons.count > 0)
+//    {
+//
+//        CLBeacon *nearestBeacon = beacons.firstObject;
+//        self.minorTxtFld.text = [NSString stringWithFormat:@"%@", nearestBeacon.minor];
+//        if(nearestBeacon.proximity == self.lastProximity || nearestBeacon.proximity == CLProximityUnknown)
+//        {
+//
+//            return;
+//        }
+//        self.lastProximity = nearestBeacon.proximity;
+//
+//        switch(nearestBeacon.proximity) {
+//            case CLProximityFar:
+//                message = @"You are far away from the beacon";
+//
+//                break;
+//            case CLProximityNear:
+//                message = @"You are near the beacon";
+//                break;
+//            case CLProximityImmediate:
+//                message = @"You are in the immediate proximity of the beacon";
+//
+//                break;
+//            case CLProximityUnknown:
+//                break; //check
+//            default: message = @"No beacons are nearby";
+//        }
+//    }
+//    
+//    NSLog(@"%@", message);
+}
+
+-(void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
+    [manager stopRangingBeaconsInRegion:(CLBeaconRegion*)region];
+    //    Tag *tag = self.tags.firstObject;
+    //    tag.lastSeenLat = [NSNumber numberWithDouble:self.mapView.userLocation.coordinate.latitude];
+    //    tag.lastSeenLon = [NSNumber numberWithDouble:self.mapView.userLocation.coordinate.latitude];
+    //    [self.locationManager stopUpdatingLocation];
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 - (void)loadPhotos {
 
     NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Tag"];
     self.photos = [self.moc executeFetchRequest:request error:nil];
-    NSLog(@"you have %li photos", self.photos.count);
+   // NSLog(@"you have %li photos", self.photos.count);
 
     for (Tag *photo in self.photos)
     {
@@ -193,5 +318,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     [textField resignFirstResponder];
     return YES;
 }
+
+
 
 @end
