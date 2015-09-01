@@ -93,9 +93,6 @@
     AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     self.moc = delegate.managedObjectContext;
 
-//
-//    [self loadTags];
-//    [self loadPhotos];
 
     [[self navigationController] setNavigationBarHidden:YES animated:YES]; // this hides the navigation bar.
 
@@ -108,24 +105,16 @@
 }
 
 
-//-(void)getBeaconsWithString:(NSString *)uuid
 -(void)getBeacons
 {
    NSUUID *beaconUUID = [[NSUUID alloc] initWithUUIDString:@"EBEFD083-70A2-47C8-9837-E7B5634DF525"];
 
-   // NSUUID *beaconUUID = [[NSUUID alloc]initWithUUIDString:@"41DA91D0-EBCA-BA44-B120-522307A37DF8"];
     
     NSString *regionIdentifier = @"ibeaconModuleUS";
 
 
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Tag"];
     self.tags = (NSMutableArray *) [self.moc executeFetchRequest:request error:nil];
-
-//    Tag *tag = [NSEntityDescription insertNewObjectForEntityForName:@"Tag" inManagedObjectContext:self.moc];
-//
-    //NSLog(@"minor from core data %d", (int)tag.minor);
-
-
 
     CLBeaconRegion *beaconRegion = [[CLBeaconRegion alloc]initWithProximityUUID:beaconUUID
                                                                      identifier:regionIdentifier];
@@ -144,9 +133,9 @@
 
 
     [self.locationManager startUpdatingLocation];
-//    beaconRegion.notifyEntryStateOnDisplay = NO;
-//    beaconRegion.notifyOnExit = YES;
-//    beaconRegion.notifyOnEntry = YES;
+    beaconRegion.notifyEntryStateOnDisplay = NO;
+    beaconRegion.notifyOnExit = YES;
+    beaconRegion.notifyOnEntry = YES;
 
 }
 
@@ -209,59 +198,29 @@
 -(void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region
 {
 
-   // NSString *message = @"";
-    self.beacons = beacons;
-//    beacons = [beacons lastObject];
-//    NSLog(@"last object is %@", beacons);
+    NSMutableArray *filteredBeacons = [NSMutableArray new];
 
-    [self loadTags];
+    for (CLBeacon *beacon in beacons)
+    {
+        for (Tag *tag in self.tags)
+        {
+            if ([beacon.minor isEqualToNumber:tag.minor])
+            {
+                NSInteger tagPosition = [self.tags indexOfObject:tag];
+                NSLog(@"position of beacon -is ------ >>>> %ld", (long)tagPosition);
 
+                [filteredBeacons addObject:beacon];
 
-    for (CLBeacon *beaconInRange in self.beacons) {
-        for (Tag *tag in self.tags) {
-            NSLog(@"-----\nBEACON SAVED == %d\n-----", [beaconInRange.minor isEqualToNumber:tag.minor]);
+            }
         }
     }
 
-
+    self.beacons = filteredBeacons;
+    
+    
     [self.tableView reloadData];
+    
 
-   // NSLog(@"Beaconssss %@", beacons);
-//    NSLog(@"Bea - %@", self.beacons);
-//
-//    NSLog(@"beacons.count == %li", beacons.count);
-//
-//    if(beacons.count > 0)
-//    {
-//
-//        CLBeacon *nearestBeacon = beacons.firstObject;
-//
-//        if(nearestBeacon.proximity == self.lastProximity || nearestBeacon.proximity == CLProximityUnknown)
-//        {
-//
-//            return;
-//        }
-//        self.lastProximity = nearestBeacon.proximity;
-//
-//        switch(nearestBeacon.proximity) {
-//            case CLProximityFar:
-//                message = @"You are far away from the beacon";
-//
-//                break;
-//            case CLProximityNear:
-//                message = @"You are near the beacon";
-//                break;
-//            case CLProximityImmediate:
-//                message = @"You are in the immediate proximity of the beacon";
-//
-//                break;
-//            case CLProximityUnknown:
-//                break; //check
-//            default: message = @"No beacons are nearby";
-//        }
-//    }
-//
-//    NSLog(@"%@", message);
 }
 
 -(void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
@@ -329,15 +288,15 @@
 
 #pragma mark UITableView Datasource & Delegate Methods
 
-- (Tag *)getTagForBeacon:(CLBeacon *)beacon {
-    for(Tag *t in self.tags) {
-        if ([t.minor isEqualToNumber:beacon.minor]) {
-            return t;
-        }
-    }
-
-    return nil;
-}
+//- (Tag *)getTagForBeacon:(CLBeacon *)beacon {
+//    for(Tag *t in self.tags) {
+//        if ([t.minor isEqualToNumber:beacon.minor]) {
+//            return t;
+//        }
+//    }
+//
+//    return nil;
+//}
 
 - (CLBeacon *)getBeaconForTag:(Tag *)tag {
     for(CLBeacon *b in self.beacons) {
