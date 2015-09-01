@@ -228,6 +228,15 @@
     [delegate sendLocalNotificationWithMessage:@"You entered the region"];
 }
 
+-(void)locationManager:(CLLocationManager *)manager didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region {
+
+    if(state == CLRegionStateInside) {
+        NSLog(@"INSIDE --- >>> %@ <<< ", region);
+    } else if (state == CLRegionStateOutside) {
+        NSLog(@"OUTSIDE --- >>> %@ <<< ", region);
+    }
+}
+
 -(void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
     [manager stopRangingBeaconsInRegion:(CLBeaconRegion*)region];
 
@@ -236,15 +245,19 @@
 
     [delegate sendLocalNotificationWithMessage:@"You exited the region"];
 
-
-
-
-    
-
 //    Tag *tag = self.tags.firstObject;
 //    tag.lastSeenLat = [NSNumber numberWithDouble:self.mapView.userLocation.coordinate.latitude];
-//    tag.lastSeenLon = [NSNumber numberWithDouble:self.mapView.userLocation.coordinate.latitude];
+//    tag.lastSeenLon = [NSNumber numberWithDouble:self.mapView.userLocation.coordinate.longitude];
+//    [self.moc save:nil];
 //    [self.locationManager stopUpdatingLocation];
+//
+//    self.mmAnnot.coordinate = CLLocationCoordinate2DMake([tag.lastSeenLat doubleValue], [tag.lastSeenLon doubleValue]);
+//
+//    self.mmAnnot.title = @"Last Seen Location";
+//
+//    [self.mapView addAnnotation:self.mmAnnot];
+//    [self.mapView showAnnotations:self.mapView.annotations animated:YES];
+
 
 }
 
@@ -355,12 +368,12 @@
             proximityLabel = [NSString stringWithFormat:@"Your %@ is Far", tag.name];
             cell.backgroundColor = [UIColor colorWithRed:(255/255.0) green:(107/255.0) blue:(105/255.0) alpha:1];
             
-            self.mmAnnot.coordinate = CLLocationCoordinate2DMake(self.mapView.userLocation.coordinate.latitude, self.mapView.userLocation.coordinate.longitude);
-
-            self.mmAnnot.title = @"Last Seen Location";
-
-            [self.mapView addAnnotation:self.mmAnnot];
-            
+//            self.mmAnnot.coordinate = CLLocationCoordinate2DMake(self.mapView.userLocation.coordinate.latitude, self.mapView.userLocation.coordinate.longitude);
+//
+//            self.mmAnnot.title = @"Last Seen Location";
+//
+//            [self.mapView addAnnotation:self.mmAnnot];
+//            
 
             break;
 
