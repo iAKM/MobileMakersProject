@@ -72,7 +72,7 @@
         self.mapView.hidden = true;
         self.arrow.hidden = false;
         self.addLabel.hidden = false;
-        self.addLabel.text = @"add a tag to get started";
+        self.addLabel.text = @"Please Add a Tag to Begin";
     }
 
 }
@@ -460,7 +460,7 @@
             self.mapView.hidden = true;
             self.arrow.hidden = false;
             self.addLabel.hidden = false;
-            self.addLabel.text = @"Add a tag to get started again";
+            self.addLabel.text = @"Add a Tag to Begin";
 
 
         [self.tableView endUpdates];
