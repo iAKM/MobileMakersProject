@@ -374,11 +374,12 @@
             cell.backgroundColor = [UIColor whiteColor];
             break;
         }
-        int minor = [[tag valueForKey:@"minor"] intValue];
 
 
 
-        cell.nameLabel.text = [NSString stringWithFormat:@"minor == %d",minor];
+
+        cell.nameLabel.text = tag.name;
+
 
 
 
