@@ -159,7 +159,7 @@
 
     if ([annotation isEqual:self.mmAnnot])
     {
-        pin.image = [UIImage imageNamed:@"pinDog"];
+        pin.image = [UIImage imageNamed:@"bikeImage"];
 
     }
 
@@ -223,8 +223,26 @@
 
 }
 
+-(void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
+{
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+
+    [delegate sendLocalNotificationWithMessage:@"You entered the region"];
+}
+
 -(void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
     [manager stopRangingBeaconsInRegion:(CLBeaconRegion*)region];
+
+
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+
+    [delegate sendLocalNotificationWithMessage:@"You exited the region"];
+
+
+
+
+    
+
 //    Tag *tag = self.tags.firstObject;
 //    tag.lastSeenLat = [NSNumber numberWithDouble:self.mapView.userLocation.coordinate.latitude];
 //    tag.lastSeenLon = [NSNumber numberWithDouble:self.mapView.userLocation.coordinate.latitude];
@@ -318,7 +336,7 @@
 {
 
     DisplayTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
-//    CLBeacon *beacon = [self.beacons objectAtIndex:indexPath.row];
+
     Tag *tag = [self.tags objectAtIndex:indexPath.row];
     CLBeacon *beacon = [self getBeaconForTag:tag];
 
@@ -327,13 +345,9 @@
         NSData *data = tag.image;
         UIImage *image = [UIImage imageWithData:data];
         cell.imageView.image = image;
-        int minor = [[tag valueForKey:@"minor"] intValue];
+        //int minor = [[tag valueForKey:@"minor"] intValue];
 
-        cell.nameLabel.text = [NSString stringWithFormat:@"%@[%d]",tag.name, minor];
-    } else {
-        cell.imageView.image = nil;
-        cell.nameLabel.text = [NSString stringWithFormat:@"OUT OF RANGE: %@", tag.name];
-        NSLog(@"tag not found!");
+       // cell.nameLabel.text = [NSString stringWithFormat:@"%@[%d]",tag.name, minor];
     }
 
     self.arrow.hidden = true;
@@ -344,6 +358,14 @@
         case CLProximityFar:
             proximityLabel = [NSString stringWithFormat:@"Your %@ is Far", tag.name];
             cell.backgroundColor = [UIColor colorWithRed:(255/255.0) green:(107/255.0) blue:(105/255.0) alpha:1];
+            
+            self.mmAnnot.coordinate = CLLocationCoordinate2DMake(self.mapView.userLocation.coordinate.latitude, self.mapView.userLocation.coordinate.longitude);
+
+            self.mmAnnot.title = @"Last Seen Location";
+
+            [self.mapView addAnnotation:self.mmAnnot];
+            
+
             break;
 
         case CLProximityNear:
