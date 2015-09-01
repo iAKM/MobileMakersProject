@@ -131,7 +131,12 @@
 
   //  NSString *message = @"";
     self.beacons = [beacons mutableCopy];
+    if(beacons.count > 0)
+    {
 
+        CLBeacon *nearestBeacon = beacons.firstObject;
+        self.minorTxtFld.text = [NSString stringWithFormat:@"%@", nearestBeacon.minor];
+    }
 //    [self.tableView reloadData];
 
 //    NSLog(@"Beaconssss %@", beacons);

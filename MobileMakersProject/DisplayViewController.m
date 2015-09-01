@@ -64,7 +64,6 @@
 
     self.mapView.showsUserLocation = YES;
     [self getCurrentLocation];
-
     [self getBeacons];
 
     if (self.beacons == 0) {
@@ -94,9 +93,9 @@
     AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     self.moc = delegate.managedObjectContext;
 
-
-    [self loadTags];
-    [self loadPhotos];
+//
+//    [self loadTags];
+//    [self loadPhotos];
 
     [[self navigationController] setNavigationBarHidden:YES animated:YES]; // this hides the navigation bar.
 
@@ -215,6 +214,16 @@
 //    beacons = [beacons lastObject];
 //    NSLog(@"last object is %@", beacons);
 
+    [self loadTags];
+
+
+    for (CLBeacon *beaconInRange in self.beacons) {
+        for (Tag *tag in self.tags) {
+            NSLog(@"-----\nBEACON SAVED == %d\n-----", [beaconInRange.minor isEqualToNumber:tag.minor]);
+        }
+    }
+
+
     [self.tableView reloadData];
 
    // NSLog(@"Beaconssss %@", beacons);
@@ -320,40 +329,59 @@
 
 #pragma mark UITableView Datasource & Delegate Methods
 
+- (Tag *)getTagForBeacon:(CLBeacon *)beacon {
+    for(Tag *t in self.tags) {
+        if ([t.minor isEqualToNumber:beacon.minor]) {
+            return t;
+        }
+    }
+
+    return nil;
+}
+
+- (CLBeacon *)getBeaconForTag:(Tag *)tag {
+    for(CLBeacon *b in self.beacons) {
+        if([b.minor isEqualToNumber:tag.minor]) {
+            return b;
+        }
+    }
+
+    return nil;
+}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"self.tags >>>>>> %@", self.tags);
-    
     return self.tags.count;
-   // return self.beacons.count;
 }
+
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
-   DisplayTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
+    DisplayTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
+//    CLBeacon *beacon = [self.beacons objectAtIndex:indexPath.row];
     Tag *tag = [self.tags objectAtIndex:indexPath.row];
-    cell.textLabel.text = @"";
+    CLBeacon *beacon = [self getBeaconForTag:tag];
 
+    if (beacon != nil) {
 
+        NSData *data = tag.image;
+        UIImage *image = [UIImage imageWithData:data];
+        cell.imageView.image = image;
+        int minor = [[tag valueForKey:@"minor"] intValue];
 
-    NSData *data = tag.image;
-    UIImage *image = [UIImage imageWithData:data];
-    cell.imageView.image = image;
+        cell.nameLabel.text = [NSString stringWithFormat:@"%@[%d]",tag.name, minor];
+    } else {
+        cell.imageView.image = nil;
+        cell.nameLabel.text = [NSString stringWithFormat:@"OUT OF RANGE: %@", tag.name];
+        NSLog(@"tag not found!");
+    }
 
-//BEACONS
-    if (self.tags.count > 0)
-    {
-
-        self.arrow.hidden = true;
-        self.addLabel.hidden = true;
-
-    CLBeacon *beacon = [self.beacons objectAtIndex:indexPath.row];
-
+    self.arrow.hidden = true;
+    self.addLabel.hidden = true;
 
     NSString *proximityLabel = @"";
-    switch (beacon.proximity)
-        {
+    switch (beacon.proximity) {
         case CLProximityFar:
             proximityLabel = [NSString stringWithFormat:@"Your %@ is Far", tag.name];
             cell.backgroundColor = [UIColor colorWithRed:(255/255.0) green:(107/255.0) blue:(105/255.0) alpha:1];
@@ -374,27 +402,17 @@
             cell.backgroundColor = [UIColor whiteColor];
             break;
         }
-        int minor = [[tag valueForKey:@"minor"] intValue];
-
-
-
-        cell.nameLabel.text = [NSString stringWithFormat:@"minor == %d",minor];
 
 
 
     NSString *detailLabel = [NSString stringWithFormat:@"%@, Dist: %0.001f", proximityLabel, beacon.accuracy];
 
-
-   // NSString *detailLabel = [NSString stringWithFormat:@"Major: %d, Minor: %d, RSSI: %d, UUID: %@",beacon.major.intValue,
-                         //    beacon.minor.intValue, (int)beacon.rssi, beacon.proximityUUID.UUIDString];
-
     cell.proxLabel.text = detailLabel;
 
-        self.tableView.hidden = false;
-        self.mapView.hidden = false;
+    self.tableView.hidden = false;
+    self.mapView.hidden = false;
 
-    }
-        return cell;
+    return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -479,7 +497,7 @@
     self.tags = (NSMutableArray *)[self.moc executeFetchRequest:request error:nil];
     NSLog(@"self.tags --------- --------- %@", self.tags);
     
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
 }
 
 
