@@ -231,14 +231,14 @@
     [delegate sendLocalNotificationWithMessage:@"You entered the region"];
 }
 
--(void)locationManager:(CLLocationManager *)manager didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region {
-
-    if(state == CLRegionStateInside) {
-        NSLog(@"INSIDE --- >>> %@ <<< ", region);
-    } else if (state == CLRegionStateOutside) {
-        NSLog(@"OUTSIDE --- >>> %@ <<< ", region);
-    }
-}
+//-(void)locationManager:(CLLocationManager *)manager didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region {
+//
+//    if(state == CLRegionStateInside) {
+//        NSLog(@"INSIDE --- >>> %@ <<< ", region);
+//    } else if (state == CLRegionStateOutside) {
+//        NSLog(@"OUTSIDE --- >>> %@ <<< ", region);
+//    }
+//}
 
 -(void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
     [manager stopRangingBeaconsInRegion:(CLBeaconRegion*)region];
@@ -419,67 +419,66 @@
     [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
 
 
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-
-    if (cell.accessoryType == UITableViewCellAccessoryCheckmark)
-    {
-        cell.accessoryType = UITableViewCellAccessoryNone;
-    }
-    else
-    {
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    }
-
+//    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+//
+//    if (cell.accessoryType == UITableViewCellAccessoryCheckmark)
+//    {
+//        cell.accessoryType = UITableViewCellAccessoryNone;
+//    }
+//    else
+//    {
+//        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+//    }
+//
 }
 
--(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    self.locLabel.hidden = true;
-    cell.accessoryView.hidden = YES;
-    self.mapView.showsUserLocation = NO;
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
-}
-
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-
-        [self.moc deleteObject:self.tags[indexPath.row]];
-
-        [self.tableView beginUpdates];
-
-        id tmp = [self.tags mutableCopy];
-        [tmp removeObjectAtIndex:indexPath.row];
-        self.tags = [tmp copy];
-
-        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//-(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+//    self.locLabel.hidden = true;
+//    cell.accessoryView.hidden = YES;
+//    self.mapView.showsUserLocation = NO;
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//
+//}
 
 
-            self.tableView.hidden = true;
-            self.mapView.hidden = true;
-            self.arrow.hidden = false;
-            self.addLabel.hidden = false;
-            self.addLabel.text = @"Add a Tag to Begin";
-
-
-        [self.tableView endUpdates];
-
-        [self.moc save:nil];
-    }
-}
+//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+//    return YES;
+//}
+//
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//
+//        [self.moc deleteObject:self.tags[indexPath.row]];
+//
+//        [self.tableView beginUpdates];
+//
+//        id tmp = [self.tags mutableCopy];
+//        [tmp removeObjectAtIndex:indexPath.row];
+//        self.tags = [tmp copy];
+//
+//        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//
+//
+//            self.tableView.hidden = true;
+//            self.mapView.hidden = true;
+//            self.arrow.hidden = false;
+//            self.addLabel.hidden = false;
+//            self.addLabel.text = @"Add a Tag to Begin";
+//
+//
+//        [self.tableView endUpdates];
+//
+//        [self.moc save:nil];
+//    }
+//}
 
 -(void)loadPhotos {
     NSFetchRequest *requestPhotos = [[NSFetchRequest alloc]initWithEntityName:@"Tag"];
     [requestPhotos setReturnsObjectsAsFaults:NO];
     [requestPhotos setRelationshipKeyPathsForPrefetching:@[@"comments"]];
     self.tags = [[self.moc executeFetchRequest:requestPhotos error:nil] mutableCopy];
-    NSLog(@"you have %li photos", self.tags.count);
 
     [self.tableView reloadData];
 }

@@ -21,6 +21,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [application setStatusBarHidden:YES];
+    
     self.bluetoothManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
 
 

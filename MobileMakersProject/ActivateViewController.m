@@ -21,6 +21,7 @@
 @property CLLocationManager *locationManager;
 @property NSMutableArray *beacons;
 @property NSMutableArray *tags;
+@property (strong, nonatomic) IBOutlet UILabel *actLabel;
 
 @property Tag *tag;
 
@@ -28,8 +29,6 @@
 
 @property CLProximity lastProximity;
 
-
-@property (nonatomic, readonly)   Jaalee_Audio_State      audioState;
 
 @end
 
@@ -46,18 +45,16 @@
 
     [self rangeBeacons];
 
+    self.actLabel.hidden = YES;
+
 }
 
 - (void)rangeBeacons {
     NSUUID *beaconUUID = [[NSUUID alloc] initWithUUIDString:@"EBEFD083-70A2-47C8-9837-E7B5634DF525"];
     NSString *regionIdentifier = @"ibeaconModuleUS";
 
-
-
     CLBeaconRegion *beaconRegion = [[CLBeaconRegion alloc]initWithProximityUUID:beaconUUID identifier:regionIdentifier];
     NSLog(@"beacon reghionnn %@", beaconRegion.minor);
-
-
 
     self.locationManager = [[CLLocationManager alloc] init];
     if([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
@@ -78,79 +75,54 @@
 
 - (IBAction)onActivateButtonPressed:(id)sender {
 
+    [NSThread sleepForTimeInterval:3.00];
     self.minor = self.minorTxtFld.text;
 
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Tag"];
 
     self.tags = [self.moc executeFetchRequest:request error:nil].mutableCopy;
 
+    BOOL tagExists = NO;
+
     for (Tag *tag in self.tags)
     {
-        if ([self.minorTxtFld.text isEqualToString:[tag.minor stringValue]])
-        {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Oops!" message:@"You already activated this beacon:" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            [alert show];
-
-          //  self.continueButton.enabled = false;
-
-            
+        if ([self.minorTxtFld.text isEqualToString:[tag.minor stringValue]]) {
+            tagExists = YES;
         }
+    }
+
+    if(tagExists)
+    {
+        self.actLabel.hidden = NO;
+        self.actLabel.text = @"Activation Failed. Try again with another beacon.";
+
+
+        self.continueButton.enabled = false;
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Oops!" message:@"You already activated this beacon:" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [alert show];
+        [self.continueButton setTitleColor:[UIColor redColor] forState:normal];
+
+    }
     else
     {
-       // self.continueButton.enabled = true;
-        [NSThread sleepForTimeInterval:3.00];
+        self.actLabel.hidden = NO;
+        self.actLabel.text = @"Activated Successfully";
+
         self.continueButton.enabled = true;
-
-        //[self.continueButton setTitleColor:[UIColor colorWithRed:232/255.0 green:208/255.0 blue:96/255.0 alpha:1] forState:normal];
-
-
+        [NSThread sleepForTimeInterval:2.00];
+        [self.continueButton setTitleColor:[UIColor greenColor] forState:normal];
 
     }
 
 
-//    if (self.activateButton.enabled == NO)
-//    {
-//            self.continueButton.enabled = false;
-//
-//    }
-//    else
-//    {
+   }
 
-//
-//        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-//    }
-}
-}
 
 - (IBAction)onContinueButtonPressed:(UIButton *)sender {
 
     
 
-
 }
-//
-//    if ([self.minorTxtFld.text isEqualToString:[self.tag.minor stringValue]])
-//    {
-//        NSLog(@"You already activated");
-//
-//    }
-//    else
-//    {
-//        NSLog(@"New");
-//
-//    }
-//
-
-
-
-//    for (Tag *tag in self.tags)
-//    {
-//        if ([self.minorTxtFld.text isEqual:tag.minor])
-//        {
-//            NSLog(@"You activated if already");
-//        }
-//    }
-
 
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

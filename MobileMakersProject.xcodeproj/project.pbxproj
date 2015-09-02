@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		260C8BCB1B950DFF004759D1 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 260C8BCA1B950DFF004759D1 /* Tag.m */; };
-		260C8BD11B95115B004759D1 /* BeaconsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 260C8BD01B95115B004759D1 /* BeaconsViewController.m */; };
 		26341C7E1B827E02002798A2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 26341C7D1B827E02002798A2 /* main.m */; };
 		26341C811B827E03002798A2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 26341C801B827E03002798A2 /* AppDelegate.m */; };
 		26341C841B827E03002798A2 /* MobileMakersProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 26341C821B827E03002798A2 /* MobileMakersProject.xcdatamodeld */; };
@@ -42,8 +41,6 @@
 /* Begin PBXFileReference section */
 		260C8BC91B950DFF004759D1 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
 		260C8BCA1B950DFF004759D1 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
-		260C8BCF1B95115B004759D1 /* BeaconsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconsViewController.h; sourceTree = "<group>"; };
-		260C8BD01B95115B004759D1 /* BeaconsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconsViewController.m; sourceTree = "<group>"; };
 		26341C781B827E01002798A2 /* MobileMakersProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MobileMakersProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26341C7C1B827E02002798A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		26341C7D1B827E02002798A2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -131,8 +128,6 @@
 				26341C881B827E03002798A2 /* Main.storyboard */,
 				DC2B5CA41B90BFF4004028D4 /* ActivateViewController.h */,
 				DC2B5CA51B90BFF4004028D4 /* ActivateViewController.m */,
-				260C8BCF1B95115B004759D1 /* BeaconsViewController.h */,
-				260C8BD01B95115B004759D1 /* BeaconsViewController.m */,
 				26341C7F1B827E03002798A2 /* AppDelegate.h */,
 				26341C801B827E03002798A2 /* AppDelegate.m */,
 				26341C851B827E03002798A2 /* SetupViewController.h */,
@@ -292,7 +287,6 @@
 				26341C811B827E03002798A2 /* AppDelegate.m in Sources */,
 				26341C7E1B827E02002798A2 /* main.m in Sources */,
 				26341C871B827E03002798A2 /* SetupViewController.m in Sources */,
-				260C8BD11B95115B004759D1 /* BeaconsViewController.m in Sources */,
 				DC72A8421B8978D90011122B /* DisplayTableViewCell.m in Sources */,
 				26341C841B827E03002798A2 /* MobileMakersProject.xcdatamodeld in Sources */,
 			);

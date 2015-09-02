@@ -13,12 +13,6 @@
 @property NSString *minor;
 
 
-typedef NS_ENUM(NSInteger, Jaalee_Audio_State) {
-//    BEACON_AUDIO_STATE_ENABLE = 0,
-//    BEACON_AUDIO_STATE_ENABLE_WHEN_START,
-    BEACON_AUDIO_STATE_ENABLE_WHEN_TAP,
-//    BEACON_AUDIO_STATE_DISABLE,
-//    BEACON_AUDIO_STATE_UNKNOWN
-};
+
 
 @end

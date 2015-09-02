@@ -25,7 +25,6 @@
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
-//-(void)getBeaconsWithString:(NSString *)uuid;
 -(void)sendLocalNotificationWithMessage:(NSString*)message;
 
 
