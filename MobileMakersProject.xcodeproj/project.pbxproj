@@ -433,7 +433,7 @@
 					"/Users/Stephen/Downloads/Jaalee-Beacon-iOS-SDK-master-master/SDK",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "a9a634d7-355e-4fa9-8427-f5bdddcec917";
 			};
 			name = Debug;
 		};
@@ -450,7 +450,7 @@
 					"/Users/Stephen/Downloads/Jaalee-Beacon-iOS-SDK-master-master/SDK",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "a9a634d7-355e-4fa9-8427-f5bdddcec917";
 			};
 			name = Release;
 		};

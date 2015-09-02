@@ -32,6 +32,7 @@
 @property NSMutableArray *uuids;
 @property CLGeocoder *geocoder;
 @property CLPlacemark *placemark;
+@property UIImage *imageOrientation;
 @property (strong, nonatomic) IBOutlet UIImageView *arrow;
 @property (strong, nonatomic) IBOutlet UILabel *addLabel;
 
@@ -495,9 +496,6 @@
 -(IBAction)unwind:(UIStoryboardSegue *)sender
 {
     NSLog(@"Success");
-       
-
 }
-
 
 @end

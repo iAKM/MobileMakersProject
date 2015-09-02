@@ -11,14 +11,12 @@
 #import "AddTagViewController.h"
 
 @interface DisplayViewController : UIViewController <CLLocationManagerDelegate>
-
 @property (strong) NSArray *beacons;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @property CLProximity lastProximity;
 
 @property NSString *minor;
-
 
 -(void)loadPhotos;
 
