@@ -19,10 +19,6 @@
 @property NSManagedObjectContext *moc;
 @property (nonatomic, copy) NSArray *photos;
 
-
-
-
-
 @end
 
 @implementation AddTagViewController
@@ -197,7 +193,5 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     [textField resignFirstResponder];
     return YES;
 }
-
-
 
 @end
