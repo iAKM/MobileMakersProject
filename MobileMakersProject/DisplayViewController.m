@@ -75,7 +75,11 @@
         self.addLabel.text = @"Please Add a Tag to Begin";
     }
 
+     self.tableView.tableFooterView = [[UIView alloc] init];
+
 }
+
+
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -204,9 +208,7 @@
         {
             if ([beacon.minor isEqualToNumber:tag.minor])
             {
-                NSInteger tagPosition = [self.tags indexOfObject:tag];
-                NSLog(@"position of beacon -is ------ >>>> %ld", (long)tagPosition);
-
+                
                 [filteredBeacons addObject:beacon];
 
             }
@@ -401,6 +403,8 @@
     self.tableView.hidden = false;
     self.mapView.hidden = false;
 
+
+
     return cell;
 }
 
@@ -486,6 +490,13 @@
     NSLog(@"self.tags --------- --------- %@", self.tags);
     
 //    [self.tableView reloadData];
+}
+
+-(IBAction)unwind:(UIStoryboardSegue *)sender
+{
+    NSLog(@"Success");
+       
+
 }
 
 

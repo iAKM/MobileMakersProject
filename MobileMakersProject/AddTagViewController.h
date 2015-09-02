@@ -15,6 +15,8 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
+@property NSString *minor;
+
 
 
 

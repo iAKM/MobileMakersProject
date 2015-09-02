@@ -10,6 +10,9 @@
 
 @interface ActivateViewController : UIViewController
 
+@property NSString *minor;
+
+
 typedef NS_ENUM(NSInteger, Jaalee_Audio_State) {
 //    BEACON_AUDIO_STATE_ENABLE = 0,
 //    BEACON_AUDIO_STATE_ENABLE_WHEN_START,
