@@ -780,7 +780,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="748" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AiL-hj-r9l">
+                            <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="748" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AiL-hj-r9l">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
                                 <state key="normal" title="Continue">
@@ -791,7 +791,8 @@
                                     <rect key="frame" x="16" y="502" width="368" height="41"/>
                                 </variation>
                                 <connections>
-                                    <segue destination="4OK-9t-ePc" kind="show" id="g6z-5C-vsp"/>
+                                    <action selector="onContinueButtonPressed:" destination="FHg-YI-iUc" eventType="touchUpInside" id="VwX-lv-wYj"/>
+                                    <segue destination="4OK-9t-ePc" kind="show" id="gky-tG-jPR"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1. Lightly tap on your Tag." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tCd-8P-HJn">
@@ -931,6 +932,6 @@
         <image name="traffic_light" width="76" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ynR-Tt-CNV"/>
+        <segue reference="4jA-u9-KXZ"/>
     </inferredMetricsTieBreakers>
 </document>

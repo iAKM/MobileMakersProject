@@ -11,6 +11,7 @@
 #import "ActivateViewController.h"
 #import "AppDelegate.h"
 #import "AddTagViewController.h"
+#import "Tag.h"
 
 @interface ActivateViewController () <CLLocationManagerDelegate>
 
@@ -20,6 +21,9 @@
 @property CLLocationManager *locationManager;
 @property NSMutableArray *beacons;
 @property NSMutableArray *tags;
+
+@property Tag *tag;
+
 @property (strong, nonatomic) IBOutlet UITextField *minorTxtFld;
 
 @property CLProximity lastProximity;
@@ -76,18 +80,78 @@
 
     self.minor = self.minorTxtFld.text;
 
-    if (self.activateButton.enabled == NO)
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Tag"];
+
+    self.tags = [self.moc executeFetchRequest:request error:nil].mutableCopy;
+
+    for (Tag *tag in self.tags)
     {
-            self.continueButton.enabled = false;
-    }
+        if ([self.minorTxtFld.text isEqualToString:[tag.minor stringValue]])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Oops!" message:@"You already activated this beacon:" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [alert show];
+
+          //  self.continueButton.enabled = false;
+
+            
+        }
     else
     {
+       // self.continueButton.enabled = true;
         [NSThread sleepForTimeInterval:3.00];
         self.continueButton.enabled = true;
-        [self.continueButton setTitleColor:[UIColor colorWithRed:232/255.0 green:208/255.0 blue:96/255.0 alpha:1] forState:normal];
-        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+
+        //[self.continueButton setTitleColor:[UIColor colorWithRed:232/255.0 green:208/255.0 blue:96/255.0 alpha:1] forState:normal];
+
+
+
     }
+
+
+//    if (self.activateButton.enabled == NO)
+//    {
+//            self.continueButton.enabled = false;
+//
+//    }
+//    else
+//    {
+
+//
+//        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+//    }
 }
+}
+
+- (IBAction)onContinueButtonPressed:(UIButton *)sender {
+
+    
+
+
+}
+//
+//    if ([self.minorTxtFld.text isEqualToString:[self.tag.minor stringValue]])
+//    {
+//        NSLog(@"You already activated");
+//
+//    }
+//    else
+//    {
+//        NSLog(@"New");
+//
+//    }
+//
+
+
+
+//    for (Tag *tag in self.tags)
+//    {
+//        if ([self.minorTxtFld.text isEqual:tag.minor])
+//        {
+//            NSLog(@"You activated if already");
+//        }
+//    }
+
+
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
